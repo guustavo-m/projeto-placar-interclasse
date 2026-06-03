@@ -41,6 +41,7 @@ function Scoreboard() {
 
     useEffect(() => {
 
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         carregarPartida();
 
         socket.on(
