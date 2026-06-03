@@ -19,4 +19,6 @@ router.put("/cronometro/start", controller.iniciarCronometro);
 router.put("/cronometro/stop", controller.pararCronometro);
 router.put("/cronometro/reset", controller.reiniciarCronometro);
 
+router.put("/reset", controller.resetarPartida);
+
 module.exports = router;
