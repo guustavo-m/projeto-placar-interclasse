@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Scoreboard from "./pages/ScoreBoard/Scoreboard";
-import ControlPanel from "./pages/ControlPannel/ControlPanel";
+import ControlPannel from "./pages/ControlPannel/ControlPannel";
 import MatchSetup from "./pages/MatchSetup/MatchSetup";
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
                 
                 <Route
                     path="/controle"
-                    element={<ControlPanel />}
+                    element={<ControlPannel />}
                 />
 
             </Routes>

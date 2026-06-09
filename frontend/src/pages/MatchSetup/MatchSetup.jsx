@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import styles from './MatchSetup.module.css'
 import { teams } from "../../data/teams";
 
 function MatchSetup() {
@@ -36,102 +36,136 @@ function MatchSetup() {
         navigate("/placar");
     }
 
-    return (
+return (
 
-        <div>
+    <div className={styles.container}>
 
-            <h1>Configurar Partida</h1>
+        <div className={styles.card}>
 
-            <select
-                value={timeA}
-                onChange={(e) => setTimeA(e.target.value)}
-            >
+            <h1 className={styles.title}>
+                Configurar Partida
+            </h1>
 
-                <option value="">
+            <div className={styles.formGroup}>
+
+                <label className={styles.label}>
                     Time A
-                </option>
+                </label>
 
-                {
-                    teams.map(team => (
-                        <option
-                            key={team.id}
-                            value={team.id}
-                        >
-                            {team.nome}
-                        </option>
-                    ))
-                }
+                <select
+                    className={styles.select}
+                    value={timeA}
+                    onChange={(e) =>
+                        setTimeA(e.target.value)
+                    }
+                >
 
-            </select>
+                    <option value="">
+                        Selecione um time
+                    </option>
 
-            <br />
-            <br />
+                    {
+                        teams.map(team => (
+                            <option
+                                key={team.id}
+                                value={team.id}
+                            >
+                                {team.nome}
+                            </option>
+                        ))
+                    }
 
-            <select
-                value={timeB}
-                onChange={(e) => setTimeB(e.target.value)}
-            >
+                </select>
 
-                <option value="">
+            </div>
+
+            <div className={styles.formGroup}>
+
+                <label className={styles.label}>
                     Time B
-                </option>
+                </label>
 
-                {
-                    teams.map(team => (
-                        <option
-                            key={team.id}
-                            value={team.id}
-                        >
-                            {team.nome}
-                        </option>
-                    ))
-                }
+                <select
+                    className={styles.select}
+                    value={timeB}
+                    onChange={(e) =>
+                        setTimeB(e.target.value)
+                    }
+                >
 
-            </select>
+                    <option value="">
+                        Selecione um time
+                    </option>
 
-            <br />
-            <br />
+                    {
+                        teams.map(team => (
+                            <option
+                                key={team.id}
+                                value={team.id}
+                            >
+                                {team.nome}
+                            </option>
+                        ))
+                    }
 
-            <select
-                value={modalidade}
-                onChange={(e) =>
-                    setModalidade(e.target.value)
-                }
-            >
+                </select>
 
-                <option value="futsal">
-                    Futsal
-                </option>
+            </div>
 
-                <option value="basquete">
-                    Basquete
-                </option>
+            <div className={styles.formGroup}>
 
-                <option value="volei">
-                    Vôlei
-                </option>
+                <label className={styles.label}>
+                    Modalidade
+                </label>
 
-                <option value="handebol">
-                    Handebol
-                </option>
+                <select
+                    className={styles.select}
+                    value={modalidade}
+                    onChange={(e) =>
+                        setModalidade(e.target.value)
+                    }
+                >
 
-            </select>
+                    <option value="futsal">
+                        ⚽ Futsal
+                    </option>
 
-            <br />
-            <br />
+                    <option value="basquete">
+                        🏀 Basquete
+                    </option>
 
-            <input
-                type="number"
-                value={tempo}
-                onChange={(e) =>
-                    setTempo(e.target.value)
-                }
-            />
+                    <option value="volei">
+                        🏐 Vôlei
+                    </option>
 
-            <br />
-            <br />
+                    <option value="handebol">
+                        🤾 Handebol
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div className={styles.formGroup}>
+
+                <label className={styles.label}>
+                    Tempo da partida (minutos)
+                </label>
+
+                <input
+                    className={styles.input}
+                    type="number"
+                    min="1"
+                    value={tempo}
+                    onChange={(e) =>
+                        setTempo(e.target.value)
+                    }
+                />
+
+            </div>
 
             <button
+                className={styles.button}
                 onClick={iniciarPartida}
             >
                 Iniciar Partida
@@ -139,7 +173,9 @@ function MatchSetup() {
 
         </div>
 
-    );
+    </div>
+
+);
 }
 
 export default MatchSetup;

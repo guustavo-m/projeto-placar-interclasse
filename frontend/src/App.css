@@ -12,3 +12,73 @@ body,
     margin: 0;
     padding: 0;
 }
+
+/* Reset global */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estrutura base */
+
+html,
+body,
+#root {
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* Estilo geral */
+
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+
+    overflow-x: hidden;
+
+    background-color: #0f172a;
+
+    color: white;
+}
+
+/* Links */
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Botões */
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+/* Inputs */
+
+input,
+select,
+textarea {
+    font-family: inherit;
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1e1b4b;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #7c3aed;
+    border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #8b5cf6;
+}

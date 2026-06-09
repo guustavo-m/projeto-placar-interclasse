@@ -1,0 +1,213 @@
+.container {
+
+    min-height: 100vh;
+
+    padding: 30px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #22003d,
+            #3b0764,
+            #5b21b6
+        );
+
+    color: white;
+
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.title {
+
+    font-size: 3rem;
+
+    font-weight: 800;
+
+    margin-bottom: 30px;
+}
+
+.score {
+
+    font-size: 5rem;
+
+    font-weight: 900;
+
+    margin-bottom: 30px;
+}
+
+.teamsContainer {
+
+    width: 100%;
+
+    max-width: 1400px;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 30px;
+
+    margin-bottom: 30px;
+}
+
+.teamCard {
+
+    background: rgba(255,255,255,.08);
+
+    backdrop-filter: blur(10px);
+
+    border-radius: 20px;
+
+    padding: 25px;
+
+    text-align: center;
+}
+
+.teamName {
+
+    font-size: 2rem;
+
+    font-weight: 800;
+
+    margin-bottom: 25px;
+}
+
+.section {
+
+    margin-bottom: 20px;
+}
+
+.sectionTitle {
+
+    font-size: 1.2rem;
+
+    font-weight: 700;
+
+    margin-bottom: 10px;
+}
+
+.buttons {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 10px;
+}
+
+.btn {
+
+    border: none;
+
+    padding: 14px 20px;
+
+    border-radius: 12px;
+
+    font-size: 1rem;
+
+    font-weight: 700;
+
+    color: white;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.btn:hover {
+
+    transform: scale(1.05);
+}
+
+.btnAdd {
+
+    background: #16a34a;
+}
+
+.btnRemove {
+
+    background: #dc2626;
+}
+
+.timerContainer {
+
+    margin-top: 20px;
+
+    background: rgba(255,255,255,.08);
+
+    padding: 25px;
+
+    border-radius: 20px;
+
+    text-align: center;
+
+    width: 100%;
+
+    max-width: 600px;
+}
+
+.timer {
+
+    font-size: 4rem;
+
+    font-weight: 900;
+
+    margin-bottom: 20px;
+}
+
+.timerButtons {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 15px;
+
+    flex-wrap: wrap;
+}
+
+.btnStart {
+
+    background: #16a34a;
+}
+
+.btnStop {
+
+    background: #eab308;
+
+    color: black;
+}
+
+.btnReset {
+
+    background: #2563eb;
+}
+
+@media (max-width: 900px) {
+
+    .teamsContainer {
+
+        grid-template-columns: 1fr;
+    }
+
+    .title {
+
+        font-size: 2rem;
+    }
+
+    .score {
+
+        font-size: 3rem;
+    }
+
+    .timer {
+
+        font-size: 2.5rem;
+    }
+}
