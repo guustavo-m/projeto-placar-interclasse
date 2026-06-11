@@ -1,16 +1,16 @@
 const partida = {
-  timeA: "Time A",
-  timeB: "Time B",
+    timeA: "Time A",
+    timeB: "Time B",
 
-  placarA: 0,
-  placarB: 0,
+    placarA: 0,
+    placarB: 0,
 
-  faltasA: 0,
-  faltasB: 0,
+    faltasA: 0,
+    faltasB: 0,
 
-  tempo: 600, // 10 minutos em segundos
+    tempoRestante: 600,
 
-  emAndamento: false
+    emAndamento: false
 };
 
 module.exports = partida;
