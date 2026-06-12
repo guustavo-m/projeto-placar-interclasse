@@ -1,0 +1,345 @@
+.container {
+
+    position: relative;
+
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+
+    overflow: hidden;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    color: white;
+}
+
+/* ===== LADOS ===== */
+
+.sideA,
+.sideB {
+
+    flex: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 40px 20px;
+}
+
+.sideA {
+
+    border-right: 4px solid rgba(255,255,255,.15);
+}
+
+/* ===== NOME DOS TIMES ===== */
+
+.teamBox {
+
+    min-width: 380px;
+
+    padding: 16px 40px;
+
+    border-radius: 16px;
+
+    background: white;
+
+    color: black;
+
+    text-align: center;
+
+    font-size: 2.2rem;
+
+    font-weight: 900;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+
+    box-shadow:
+        0 8px 30px rgba(0,0,0,.2);
+}
+
+/* ===== BANDEIRAS ===== */
+
+.flagContainer {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    flex: 1;
+}
+
+.flag {
+
+    width: 420px;
+
+    max-width: 90%;
+
+    object-fit: contain;
+
+    filter:
+        drop-shadow(
+            0 10px 20px rgba(0,0,0,.35)
+        );
+}
+
+/* ===== ARTILHEIROS ===== */
+
+.scorers {
+
+    width: 100%;
+
+    max-width: 500px;
+
+    padding: 20px;
+
+    border-radius: 16px;
+
+    background:
+        rgba(255,255,255,.08);
+
+    backdrop-filter: blur(8px);
+}
+
+.scorers h3 {
+
+    text-align: center;
+
+    margin-bottom: 15px;
+
+    font-size: 1.4rem;
+
+    letter-spacing: 2px;
+}
+
+.scorers ul {
+
+    list-style: none;
+}
+
+.scorers li {
+
+    margin-bottom: 10px;
+
+    font-size: 1.1rem;
+}
+
+/* ===== CAMADA CENTRAL ===== */
+
+.overlay {
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+}
+
+/* ===== CRONÔMETRO ===== */
+
+.timer {
+
+    margin-top: 25px;
+
+    padding: 12px 40px;
+
+    border-radius: 14px;
+
+    background: white;
+
+    color: black;
+
+    font-size: 2.5rem;
+
+    font-weight: 900;
+
+    box-shadow:
+        0 8px 30px rgba(0,0,0,.25);
+}
+
+/* ===== PLACAR ===== */
+
+.score {
+
+    position: absolute;
+
+    top: 50%;
+
+    left: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 30px;
+
+    font-size: clamp(
+        8rem,
+        14vw,
+        16rem
+    );
+
+    font-weight: 900;
+
+    text-shadow:
+        0 0 30px rgba(0,0,0,.35);
+}
+
+.separator {
+
+    opacity: .8;
+}
+
+/* ===== FALTAS ===== */
+
+.fouls {
+
+    position: absolute;
+
+    bottom: 160px;
+
+    width: 100%;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 0 120px;
+}
+
+.fouls div {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 1.3rem;
+
+    font-weight: 700;
+}
+
+.fouls strong {
+
+    font-size: 3rem;
+}
+
+/* ===== LOGO ===== */
+
+.logoContainer {
+
+    position: absolute;
+
+    bottom: 30px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+}
+
+.logo {
+
+    width: 140px;
+
+    object-fit: contain;
+
+    filter:
+        drop-shadow(
+            0 8px 20px rgba(0,0,0,.35)
+        );
+}
+
+/* ===== CARREGAMENTO ===== */
+
+.loading {
+
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    background: #111827;
+
+    color: white;
+
+    font-size: 2rem;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+
+@media (max-width: 1400px) {
+
+    .flag {
+
+        width: 320px;
+    }
+
+    .teamBox {
+
+        min-width: 280px;
+
+        font-size: 1.7rem;
+    }
+
+    .timer {
+
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 900px) {
+
+    .teamBox {
+
+        min-width: 180px;
+
+        font-size: 1.2rem;
+
+        padding: 12px 20px;
+    }
+
+    .flag {
+
+        width: 180px;
+    }
+
+    .fouls {
+
+        padding: 0 40px;
+    }
+
+    .fouls strong {
+
+        font-size: 2rem;
+    }
+
+    .logo {
+
+        width: 90px;
+    }
+}

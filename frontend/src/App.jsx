@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Scoreboard from "./pages/ScoreBoard/Scoreboard";
+import Scoreboard from "./pages/Scoreboards/FutsalScoreboard";
 import ControlPannel from "./pages/ControlPannel/ControlPannel";
 import MatchSetup from "./pages/MatchSetup/MatchSetup";
 
