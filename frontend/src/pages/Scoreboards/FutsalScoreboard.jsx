@@ -2,31 +2,11 @@ import { useEffect, useState } from "react";
 
 import api from "../../services/api";
 import socket from "../../services/socket";
-
-import { teams } from "../../data/teams";
-
 import styles from "./FutsalScoreboard.module.css";
 
 function FutsalScoreboard() {
 
     const [partida, setPartida] = useState(null);
-
-    const configuracao =
-        JSON.parse(
-            localStorage.getItem("partida")
-        );
-
-    const teamA =
-        teams.find(
-            team =>
-                team.id === Number(configuracao?.timeA)
-        );
-
-    const teamB =
-        teams.find(
-            team =>
-                team.id === Number(configuracao?.timeB)
-        );
 
     useEffect(() => {
 
@@ -37,7 +17,9 @@ function FutsalScoreboard() {
                 const resposta =
                     await api.get("/partidas");
 
-                setPartida(resposta.data);
+                setPartida(
+                    resposta.data[0]
+                );
 
             } catch (erro) {
 
@@ -177,7 +159,7 @@ function FutsalScoreboard() {
                 <div className={styles.score}>
 
                     <span>
-                        {partida.placarA}
+                        {partida.placar_a}
                     </span>
 
                     <span className={styles.separator}>
@@ -185,7 +167,7 @@ function FutsalScoreboard() {
                     </span>
 
                     <span>
-                        {partida.placarB}
+                        {partida.placar_b}
                     </span>
 
                 </div>
@@ -197,7 +179,7 @@ function FutsalScoreboard() {
                         FALTAS
 
                         <strong>
-                            {partida.faltasA}
+                            {partida.faltas_a}
                         </strong>
 
                     </div>
@@ -207,7 +189,7 @@ function FutsalScoreboard() {
                         FALTAS
 
                         <strong>
-                            {partida.faltasB}
+                            {partida.faltas_b}
                         </strong>
 
                     </div>

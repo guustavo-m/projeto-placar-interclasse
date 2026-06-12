@@ -5,7 +5,7 @@ class Gol {
     static async criar(
         partidaId,
         jogadorId,
-        equipeId,
+        lado,
         minuto
     ) {
 
@@ -16,7 +16,7 @@ class Gol {
                 (
                     partida_id,
                     jogador_id,
-                    equipe_id,
+                    lado,
                     minuto
                 )
                 VALUES
@@ -31,7 +31,7 @@ class Gol {
                 [
                     partidaId,
                     jogadorId,
-                    equipeId,
+                    lado,
                     minuto
                 ]
             );
@@ -52,6 +52,8 @@ class Gol {
                     g.*,
 
                     j.nome AS jogador,
+
+                    j.numero,
 
                     e.nome AS equipe
 
@@ -74,6 +76,22 @@ class Gol {
 
     }
 
+    static async buscarPorId(id) {
+
+        const resultado =
+            await pool.query(
+                `
+                SELECT *
+                FROM gols
+                WHERE id = $1
+                `,
+                [id]
+            );
+
+        return resultado.rows[0];
+
+    }
+
     static async remover(id) {
 
         const resultado =
@@ -90,21 +108,30 @@ class Gol {
 
     }
 
-    static async buscarPorId(id) {
+    static async buscarUltimoGolEquipe(
+        partidaId,
+        equipeId
+    ) {
 
-    const resultado =
-        await pool.query(
-            `
-            SELECT *
-            FROM gols
-            WHERE id = $1
-            `,
-            [id]
-        );
+        const resultado =
+            await pool.query(
+                `
+                SELECT *
+                FROM gols
+                WHERE partida_id = $1
+                  AND equipe_id = $2
+                ORDER BY id DESC
+                LIMIT 1
+                `,
+                [
+                    partidaId,
+                    equipeId
+                ]
+            );
 
-    return resultado.rows[0];
+        return resultado.rows[0];
 
-}
+    }
 
 }
 

@@ -2,62 +2,69 @@ import { useEffect, useState } from "react";
 import api from "../../services/api";
 import socket from "../../services/socket";
 import styles from "./ControlPannel.module.css";
-function ControlPannel() {
 
+function ControlPannel() {
     const [partida, setPartida] = useState(null);
     const [gols, setGols] = useState([]);
-    const [modalGol, setModalGol] = useState(false);
-    const [ladoGol, setLadoGol] = useState(null);
     const [jogadores, setJogadores] = useState([]);
+    const [modalAberto, setModalAberto] =
+        useState(false);
+    const [ladoSelecionado, setLadoSelecionado] =
+        useState(null);
+    const [jogadorSelecionado, setJogadorSelecionado] =
+        useState(null);
 
     useEffect(() => {
-
         async function carregar() {
-
-            const resposta =
-                await api.get("/partidas");
-
-            setPartida(
-                resposta.data
-            );
-
-            const golsResposta =
-                await api.get(
-                    `/gols/partidas/${resposta.data.id}`
+            try {
+                const resposta =
+                    await api.get("/partidas");
+                const partidaAtual =
+                    resposta.data[0];
+                setPartida(
+                    partidaAtual
                 );
 
-            setGols(
-                golsResposta.data
-            );
+                if (partidaAtual) {
+                    const golsResposta =
+                        await api.get(
+                            `/gols/partida/${partidaAtual.id}`
+                        );
 
+                    setGols(
+                        golsResposta.data
+                    );
+                }
+            } catch (erro) {
+                console.error(erro);
+            }
         }
-
         carregar();
-
         socket.on(
             "partidaAtualizada",
             async dados => {
-
                 setPartida(
                     dados
                 );
-
-                const golsResposta =
-                    await api.get(
-                        `/gols/partidas/${dados.id}`
+                try {
+                    const golsResposta =
+                        await api.get(
+                            `/gols/partida/${dados.id}`
+                        );
+                    setGols(
+                        golsResposta.data
                     );
-
-                setGols(
-                    golsResposta.data
-                );
-
+                } catch (erro) {
+                    console.error(erro);
+                }
             }
         );
 
         return () => {
-            socket.off("partidaAtualizada");
+            socket.off(
+                "partidaAtualizada"
+            );
         };
-
     }, []);
 
     async function abrirModalGol(lado) {
@@ -65,7 +72,6 @@ function ControlPannel() {
             lado === "A"
                 ? partida.equipe_a
                 : partida.equipe_b;
-
         const resposta =
             await api.get(
                 `/jogadores/equipe/${equipeId}`
@@ -74,407 +80,411 @@ function ControlPannel() {
         setJogadores(
             resposta.data
         );
-
-        setLadoGol(
+        setLadoSelecionado(
             lado
         );
 
-        setModalGol(
+        setJogadorSelecionado("");
+
+        setModalAberto(
             true
         );
 
     }
 
-    async function abrirModalGol(
-    lado
-) {
+    async function confirmarGol() {
 
-    const equipeId =
-        lado === "A"
-            ? partida.equipe_a
-            : partida.equipe_b;
+        if (!jogadorSelecionado)
+            return;
 
-    const resposta =
-        await api.get(
-            `/jogadores/equipe/${equipeId}`
+        const equipeId =
+            ladoSelecionado === "A"
+                ? partida.equipe_a
+                : partida.equipe_b;
+
+        const minutoAtual =
+        Math.floor(
+            (
+                partida.tempo_inicial -
+                partida.tempo_restante
+            ) / 60
+        ) + 1;
+
+        await api.post(
+            "/gols",
+            {
+
+                partida_id:
+                    partida.id,
+
+                jogador_id:
+                    Number(jogadorSelecionado),
+
+                equipe_id:
+                    equipeId,
+
+                lado:
+                    ladoSelecionado,
+
+                minuto:
+                    minutoAtual
+
+            }
         );
 
-    setJogadores(
-        resposta.data
-    );
+        const golsAtualizados =
+            await api.get(
+                `/gols/partida/${partida.id}`
+            );
 
-    setLadoGol(
-        lado
-    );
+        setGols(
+            golsAtualizados.data
+        );
 
-    setModalGol(
-        true
-    );
+        setModalAberto(
+            false
+        );
 
-}
-
-async function anularGol(
-    golId
-) {
-
-    await api.delete(
-        `/gols/${golId}`
-    );
-
-}
-
-    async function adicionarGol(lado) {
-        await api.put(`/partidas/gol/add/${lado}`);
     }
 
-    async function removerGol(lado) {
-        await api.put(`/partidas/gol/remove/${lado}`);
+    async function anularGol(
+        golId
+    ) {
+
+        try {
+
+            await api.delete(
+                `/gols/${golId}`
+            );
+
+            const golsAtualizados =
+                await api.get(
+                    `/gols/partida/${partida.id}`
+                );
+
+            setGols(
+                golsAtualizados.data
+            );
+
+        } catch (erro) {
+
+            console.error(erro);
+
+        }
+
     }
 
     async function adicionarFalta(lado) {
-        await api.put(`/partidas/falta/add/${lado}`);
+
+        await api.put(
+            `/partidas/falta/add/${lado}`
+        );
+
     }
 
     async function removerFalta(lado) {
-        await api.put(`/partidas/falta/remove/${lado}`);
+
+        await api.put(
+            `/partidas/falta/remove/${lado}`
+        );
+
     }
 
     async function iniciarCronometro() {
-        await api.put("/partidas/cronometro/start");
+
+        await api.put(
+            "/partidas/cronometro/start"
+        );
+
     }
 
     async function pararCronometro() {
-        await api.put("/partidas/cronometro/stop");
+
+        await api.put(
+            "/partidas/cronometro/stop"
+        );
+
     }
 
     async function resetarCronometro() {
-        await api.put("/partidas/cronometro/reset");
+
+        await api.put(
+            "/partidas/cronometro/reset"
+        );
+
     }
 
     if (!partida) {
+
         return <h1>Carregando...</h1>;
+
     }
 
-return (
+    return (
 
-    <div className={styles.container}>
+        <div className={styles.container}>
 
-        <h1 className={styles.title}>
-            Painel de Controle
-        </h1>
+            <h1 className={styles.title}>
+                Painel de Controle
+            </h1>
 
-        <div className={styles.score}>
-            {partida.placarA} x {partida.placarB}
-        </div>
-
-        <div className={styles.teamsContainer}>
-
-            <div className={styles.teamCard}>
-
-                <h2 className={styles.teamName}>
-                    {partida.timeA}
-                </h2>
-
-                <div className={styles.section}>
-
-                    <p className={styles.sectionTitle}>
-                        Gols
-                    </p>
-
-                    <div className={styles.buttons}>
-
-                        <button
-                            className={`${styles.btn} ${styles.btnAdd}`}
-                            onClick={() => abrirModalGol("A")}
-                        >
-                            + Gol
-                        </button>
-
-                        <button
-                            className={`${styles.btn} ${styles.btnRemove}`}
-                            onClick={() => removerGol("A")}
-                        >
-                            - Gol
-                        </button>
-
-                    </div>
-
-                </div>
-
-                <div className={styles.goalList}>
-                    <h3>
-                        Artilheiros
-                    </h3>
-                    {
-                        gols
-                            .filter(
-                                gol =>
-                                    gol.equipe_id ===
-                                    partida.equipe_a
-                            )
-                            .map(
-                                gol => (
-
-                                    <div
-                                        key={gol.id}
-                                    >
-
-                                        ⚽
-                                        {" "}
-                                        {gol.jogador}
-                                        {" "}
-                                        ({gol.minuto}')
-
-                                        <button
-                                            onClick={() =>
-                                                anularGol(
-                                                    gol.id
-                                                )
-                                            }
-                                        >
-                                            ❌
-                                        </button>
-                                    </div>
-                                ))}
-                </div>
-
-                <div className={styles.section}>
-
-                    <p className={styles.sectionTitle}>
-                        Faltas
-                    </p>
-
-                    <div className={styles.buttons}>
-
-                        <button
-                            className={`${styles.btn} ${styles.btnAdd}`}
-                            onClick={() => adicionarFalta("A")}
-                        >
-                            + Falta
-                        </button>
-
-                        <button
-                            className={`${styles.btn} ${styles.btnRemove}`}
-                            onClick={() => removerFalta("A")}
-                        >
-                            - Falta
-                        </button>
-
-                    </div>
-
-                </div>
-
+            <div className={styles.score}>
+                {partida.placar_a} x {partida.placar_b}
             </div>
 
-            <div className={styles.teamCard}>
+            <div className={styles.teamsContainer}>
 
-                <h2 className={styles.teamName}>
-                    {partida.timeB}
-                </h2>
+                <div className={styles.teamCard}>
 
-                <div className={styles.section}>
+                    <h2 className={styles.teamName}>
+                        {partida.nome_time_a}
+                    </h2>
 
-                    <p className={styles.sectionTitle}>
-                        Gols
-                    </p>
+                    <div className={styles.section}>
 
-                    <div className={styles.buttons}>
+                        <p className={styles.sectionTitle}>
+                            Gols
+                        </p>
 
-                        <button
-                            className={`${styles.btn} ${styles.btnAdd}`}
-                            onClick={() => abrirModalGol("B")}
-                        >
-                            + Gol
-                        </button>
-
-                        <button
-                            className={`${styles.btn} ${styles.btnRemove}`}
-                            onClick={() => removerGol("B")}
-                        >
-                            - Gol
-                        </button>
-                    </div>
-                </div>
-
-                <div className={styles.goalList}>
-                <h3>
-                    Artilheiros
-                </h3>
-                {
-                    gols
-                        .filter(
-                            gol =>
-                                gol.equipe_id ===
-                                partida.equipe_b
-                        )
-                        .map(
-                            gol => (
-                                <div
-                                    key={gol.id}
-                                >
-                                    ⚽
-                                    {" "}
-                                    {gol.jogador}
-                                    {" "}
-                                    ({gol.minuto}')
-                                    <button
-                                        onClick={() =>
-                                            anularGol(
-                                                gol.id
-                                            )
-                                        }
-                                    >
-                                        ❌
-                                    </button>
-                                </div>
-                            ))}
-            </div>
-
-                <div className={styles.section}>
-
-                    <p className={styles.sectionTitle}>
-                        Faltas
-                    </p>
-
-                    <div className={styles.buttons}>
-
-                        <button
-                            className={`${styles.btn} ${styles.btnAdd}`}
-                            onClick={() => adicionarFalta("B")}
-                        >
-                            + Falta
-                        </button>
-
-                        <button
-                            className={`${styles.btn} ${styles.btnRemove}`}
-                            onClick={() => removerFalta("B")}
-                        >
-                            - Falta
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div className={styles.timerContainer}>
-
-            <div className={styles.timer}>
-                {partida.tempoFormatado}
-            </div>
-
-            <div className={styles.timerButtons}>
-
-                <button
-                    className={`${styles.btn} ${styles.btnStart}`}
-                    onClick={iniciarCronometro}
-                >
-                    ▶ Iniciar
-                </button>
-
-                <button
-                    className={`${styles.btn} ${styles.btnStop}`}
-                    onClick={pararCronometro}
-                >
-                    ⏸ Pausar
-                </button>
-
-                <button
-                    className={`${styles.btn} ${styles.btnReset}`}
-                    onClick={resetarCronometro}
-                >
-                    🔄 Reiniciar
-                </button>
-
-            </div>
-
-        </div>
-{
-    modalGol && (
-
-        <div
-            className={styles.modalOverlay}
-        >
-
-            <div
-                className={styles.modal}
-            >
-
-                <h2>
-                    ⚽ Quem fez o gol?
-                </h2>
-
-                {
-
-                    jogadores.map(
-                        jogador => (
+                        <div className={styles.buttons}>
 
                             <button
-
-                                key={
-                                    jogador.id
-                                }
-
-                                className={
-                                    styles.playerButton
-                                }
-
-                                onClick={() =>
-                                    registrarGol(
-                                        jogador
-                                    )
-                                }
-
+                                className={`${styles.btn} ${styles.btnAdd}`}
+                                onClick={() => abrirModalGol("A")}
                             >
-
-                                #
-                                {
-                                    jogador.numero
-                                }
-
-                                {" "}
-
-                                {
-                                    jogador.nome
-                                }
-
+                                + Gol
                             </button>
 
-                        )
-                    )
+                        </div>
 
-                }
+                    </div>
 
-                <button
+                    <div className={styles.goalList}>
 
-                    className={
-                        styles.closeButton
-                    }
+                        <h3>
+                            Artilheiros
+                        </h3>
 
-                    onClick={() =>
-                        setModalGol(
-                            false
-                        )
-                    }
+                        {
+                            gols
+                                .filter(
+                                    gol =>
+                                        gol.equipe_id ===
+                                        partida.equipe_a
+                                )
+                                .map(
+                                    gol => (
 
-                >
+                                        <div
+                                            key={gol.id}
+                                        >
 
-                    Fechar
+                                            ⚽ {gol.jogador}
+                                            {" "}
+                                            ({gol.minuto}')
 
-                </button>
+                                            <button
+                                                onClick={() =>
+                                                    anularGol(
+                                                        gol.id
+                                                    )
+                                                }
+                                            >
+                                                ❌
+                                            </button>
+
+                                        </div>
+
+                                    )
+                                )
+                        }
+
+                    </div>
+
+                    <div className={styles.section}>
+
+                        <p className={styles.sectionTitle}>
+                            Faltas
+                        </p>
+
+                        <div className={styles.buttons}>
+
+                            <button
+                                className={`${styles.btn} ${styles.btnAdd}`}
+                                onClick={() => adicionarFalta("A")}
+                            >
+                                + Falta
+                            </button>
+
+                            <button
+                                className={`${styles.btn} ${styles.btnRemove}`}
+                                onClick={() => removerFalta("A")}
+                            >
+                                - Falta
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div className={styles.teamCard}>
+
+                    <h2 className={styles.teamName}>
+                        {partida.nome_time_b}
+                    </h2>
+
+                    <div className={styles.section}>
+
+                        <p className={styles.sectionTitle}>
+                            Gols
+                        </p>
+
+                        <div className={styles.buttons}>
+
+                            <button
+                                className={`${styles.btn} ${styles.btnAdd}`}
+                                onClick={() => abrirModalGol("B")}
+                            >
+                                + Gol
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div className={styles.goalList}>
+
+                        <h3>
+                            Artilheiros
+                        </h3>
+
+                        {
+                            gols
+                                .filter(
+                                    gol =>
+                                        gol.equipe_id ===
+                                        partida.equipe_b
+                                )
+                                .map(
+                                    gol => (
+
+                                        <div
+                                            key={gol.id}
+                                        >
+
+                                            ⚽ {gol.jogador}
+                                            {" "}
+                                            ({gol.minuto}')
+
+                                            <button
+                                                onClick={() =>
+                                                    anularGol(
+                                                        gol.id
+                                                    )
+                                                }
+                                            >
+                                                ❌
+                                            </button>
+
+                                        </div>
+
+                                    )
+                                )
+                        }
+
+                    </div>
+
+                    <div className={styles.section}>
+
+                        <p className={styles.sectionTitle}>
+                            Faltas
+                        </p>
+
+                        <div className={styles.buttons}>
+
+                            <button
+                                className={`${styles.btn} ${styles.btnAdd}`}
+                                onClick={() => adicionarFalta("B")}
+                            >
+                                + Falta
+                            </button>
+
+                            <button
+                                className={`${styles.btn} ${styles.btnRemove}`}
+                                onClick={() => removerFalta("B")}
+                            >
+                                - Falta
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
 
+            {
+                modalAberto && (
+
+                    <div className={styles.modalBackdrop}>
+
+                        <div className={styles.modal}>
+
+                            <h2>
+                                Quem fez o gol?
+                            </h2>
+
+                            <select
+                                value={jogadorSelecionado || ""}
+                                onChange={
+                                    e =>
+                                    setJogadorSelecionado(
+                                        e.target.value
+                                    )
+                                }
+                            >
+
+                                <option value="">
+                                    Selecione
+                                </option>
+
+                                {
+                                    jogadores.map(
+                                        jogador => (
+
+                                            <option
+                                                key={jogador.id}
+                                                value={jogador.id}
+                                            >
+
+                                                {jogador.numero}
+                                                {" - "}
+                                                {jogador.nome}
+                                            </option>
+                                        )
+                                    )
+                                }
+                            </select>
+                            <button
+                                onClick={confirmarGol}
+                            >
+                                Confirmar
+                            </button>
+                            <button
+                                onClick={() =>
+                                    setModalAberto(false)
+                                }
+                            >
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                )
+            }
         </div>
-
-    )
+    );
 }
-    </div>
-
-);
-}
-
 export default ControlPannel;
