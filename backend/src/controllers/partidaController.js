@@ -91,41 +91,50 @@ class PartidaController {
 
     }
 
-    static async buscarAtual(
-        req,
-        res
-    ) {
+static async buscarAtual(
+    req,
+    res
+) {
 
-        try {
+    try {
 
-            const partidas =
-                await Partida.listar();
+        const partidas =
+            await Partida.listar();
 
-            if (
-                partidas.length === 0
-            ) {
+        if (
+            partidas.length === 0
+        ) {
 
-                return res.status(404).json({
-                    erro: "Nenhuma partida encontrada"
+            return res
+                .status(404)
+                .json({
+                    erro:
+                    "Nenhuma partida encontrada"
                 });
-
-            }
-
-            return res.json(
-                partidas[0]
-            );
-
-        } catch (erro) {
-
-            console.error(erro);
-
-            return res.status(500).json({
-                erro: "Erro ao buscar partida atual"
-            });
 
         }
 
+        const partidaCompleta =
+            await Partida.buscarCompleta(
+                partidas[0].id
+            );
+
+        return res.json(
+            partidaCompleta
+        );
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        return res.status(500).json({
+            erro:
+            "Erro ao buscar partida atual"
+        });
+
     }
+
+}
 
     static async adicionarGol(
         req,

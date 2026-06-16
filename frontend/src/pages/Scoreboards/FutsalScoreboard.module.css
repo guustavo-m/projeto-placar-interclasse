@@ -1,345 +1,311 @@
 .container {
-
-    position: relative;
-
     width: 100vw;
     height: 100vh;
-
     display: flex;
-
+    position: relative;
     overflow: hidden;
-
-    font-family: Arial, Helvetica, sans-serif;
-
-    color: white;
+    font-family: Arial, sans-serif;
 }
 
-/* ===== LADOS ===== */
+/* ========================= */
+/* LADOS */
+/* ========================= */
 
 .sideA,
 .sideB {
-
-    flex: 1;
-
+    width: 50%;
+    height: 100%;
+    position: relative;
     display: flex;
-
     flex-direction: column;
+}
 
-    align-items: center;
+.teamBoxContainerA {
+    align-self: flex-start;
+    margin-left: 45px;
+}
 
-    justify-content: space-between;
+.teamBoxContainerB {
+    align-self: flex-end;
+    margin-right: 45px;
+}
 
-    padding: 40px 20px;
+.center {
+    width: 2%
 }
 
 .sideA {
-
-    border-right: 4px solid rgba(255,255,255,.15);
+    border-right: 6px solid black;
 }
 
-/* ===== NOME DOS TIMES ===== */
+.sideB {
+    border-left: 6px solid black;
+}
+
+/* ========================= */
+/* NOME DOS TIMES */
+/* ========================= */
 
 .teamBox {
+    margin-top: 25px;
 
-    min-width: 380px;
+    min-width: 260px;
+    max-width: 400px;
+    padding-left: 10px;
+    padding-right: 10px;
 
-    padding: 16px 40px;
+    height: 80px;
 
-    border-radius: 16px;
+    background: #f0f0f0;
 
-    background: white;
-
-    color: black;
-
-    text-align: center;
-
-    font-size: 2.2rem;
-
-    font-weight: 900;
-
-    letter-spacing: 2px;
-
-    text-transform: uppercase;
-
-    box-shadow:
-        0 8px 30px rgba(0,0,0,.2);
-}
-
-/* ===== BANDEIRAS ===== */
-
-.flagContainer {
+    border-radius: 20px;
 
     display: flex;
-
+    align-items: center;
     justify-content: center;
 
-    align-items: center;
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
 
-    flex: 1;
+.teamBoxContainerA {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.teamBoxContainerB {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ========================= */
+/* BANDEIRAS */
+/* ========================= */
+
+.flagContainer {
+    margin-top: 30px;
 }
 
 .flag {
+    width: 350px;
+    height: 220px;
 
-    width: 420px;
+    object-fit: cover;
 
-    max-width: 90%;
-
-    object-fit: contain;
-
-    filter:
-        drop-shadow(
-            0 10px 20px rgba(0,0,0,.35)
-        );
+    border: 2px solid white;
 }
 
-/* ===== ARTILHEIROS ===== */
+/* ========================= */
+/* GOLS */
+/* ========================= */
 
-.scorers {
+.goalsContainerA {
+    margin-top: 25px;
 
-    width: 100%;
-
-    max-width: 500px;
-
-    padding: 20px;
-
-    border-radius: 16px;
-
-    background:
-        rgba(255,255,255,.08);
-
-    backdrop-filter: blur(8px);
-}
-
-.scorers h3 {
-
-    text-align: center;
-
-    margin-bottom: 15px;
-
-    font-size: 1.4rem;
-
-    letter-spacing: 2px;
-}
-
-.scorers ul {
-
-    list-style: none;
-}
-
-.scorers li {
-
-    margin-bottom: 10px;
-
-    font-size: 1.1rem;
-}
-
-/* ===== CAMADA CENTRAL ===== */
-
-.overlay {
-
-    position: absolute;
-
-    inset: 0;
-
-    pointer-events: none;
+    width: 330px;
+    margin-left: 10px;
 
     display: flex;
-
     flex-direction: column;
+    gap: 10px;
+}
 
+.goalsContainerB {
+    margin-top: 25px;
+    width: 330px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-right: 10px;
+    margin-left: 44%;
+}
+
+.goalCard {
+    background: #f5f5f5;
+
+    border-radius: 18px;
+    width: 420px;
+    padding: 12px 18px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    font-size: 1.8rem;
+    font-weight: 700;
+
+    color: black;
+}
+
+.goalCard strong {
+    font-size: 2rem;
+}
+
+/* ========================= */
+/* CENTRO */
+/* ========================= */
+
+.center {
+    width: 20%;
+    height: 100%;
+
+    background: black;
+
+    display: flex;
+    flex-direction: column;
     align-items: center;
 }
 
-/* ===== CRONÔMETRO ===== */
+/* ========================= */
+/* TIMER */
+/* ========================= */
 
 .timer {
-
     margin-top: 25px;
 
-    padding: 12px 40px;
+    width: 220px;
+    height: 90px;
 
-    border-radius: 14px;
+    background: #efefef;
+
+    border-radius: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+
+    font-size: 4rem;
+    font-weight: 400;
+
+    color: black;
+}
+
+/* ========================= */
+/* PLACAR */
+/* ========================= */
+
+.score {
+    margin-top: 10px;
+
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    gap: 120px;
+    z-index: 5;
+}
+
+.scoreA,
+.scoreB {
+    color: white;
+
+    font-size: 25rem;
+    font-weight: 900;
+
+    line-height: 1;
+}
+
+/* ========================= */
+/* LOGO */
+/* ========================= */
+
+.logoContainer {
+    position: absolute;
+
+    bottom: 0;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 300px;
+    height: fit-content;
 
     background: white;
 
-    color: black;
-
-    font-size: 2.5rem;
-
-    font-weight: 900;
-
-    box-shadow:
-        0 8px 30px rgba(0,0,0,.25);
-}
-
-/* ===== PLACAR ===== */
-
-.score {
-
-    position: absolute;
-
-    top: 50%;
-
-    left: 50%;
-
-    transform:
-        translate(-50%, -50%);
+    border: 3px solid black;
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
 
     display: flex;
-
+    justify-content: center;
     align-items: center;
 
-    gap: 30px;
-
-    font-size: clamp(
-        8rem,
-        14vw,
-        16rem
-    );
-
-    font-weight: 900;
-
-    text-shadow:
-        0 0 30px rgba(0,0,0,.35);
-}
-
-.separator {
-
-    opacity: .8;
-}
-
-/* ===== FALTAS ===== */
-
-.fouls {
-
-    position: absolute;
-
-    bottom: 160px;
-
-    width: 100%;
-
-    display: flex;
-
-    justify-content: space-between;
-
-    padding: 0 120px;
-}
-
-.fouls div {
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    gap: 10px;
-
-    font-size: 1.3rem;
-
-    font-weight: 700;
-}
-
-.fouls strong {
-
-    font-size: 3rem;
-}
-
-/* ===== LOGO ===== */
-
-.logoContainer {
-
-    position: absolute;
-
-    bottom: 30px;
-
-    left: 50%;
-
-    transform:
-        translateX(-50%);
+    z-index: 5;
 }
 
 .logo {
-
-    width: 140px;
-
+    width: 260px;
+    max-width: 100%;
     object-fit: contain;
-
-    filter:
-        drop-shadow(
-            0 8px 20px rgba(0,0,0,.35)
-        );
 }
 
-/* ===== CARREGAMENTO ===== */
+/* ========================= */
+/* LOADING */
+/* ========================= */
 
 .loading {
-
     width: 100vw;
     height: 100vh;
 
     display: flex;
-
     justify-content: center;
     align-items: center;
 
-    background: #111827;
-
-    color: white;
-
     font-size: 2rem;
+    font-weight: bold;
 }
 
-/* ===== RESPONSIVIDADE ===== */
+/* ========================= */
+/* RESPONSIVO */
+/* ========================= */
 
-@media (max-width: 1400px) {
-
-    .flag {
-
-        width: 320px;
-    }
+@media (max-width: 1366px) {
 
     .teamBox {
+        width: 220px;
+        height: 70px;
+        font-size: 2.3rem;
+    }
 
-        min-width: 280px;
+    .flag {
+        width: 190px;
+        height: 125px;
+    }
 
-        font-size: 1.7rem;
+    .scoreA,
+    .scoreB {
+        font-size: 10rem;
     }
 
     .timer {
-
-        font-size: 2rem;
-    }
-}
-
-@media (max-width: 900px) {
-
-    .teamBox {
-
-        min-width: 180px;
-
-        font-size: 1.2rem;
-
-        padding: 12px 20px;
-    }
-
-    .flag {
-
-        width: 180px;
-    }
-
-    .fouls {
-
-        padding: 0 40px;
-    }
-
-    .fouls strong {
-
-        font-size: 2rem;
+        width: 190px;
+        height: 75px;
+        font-size: 3rem;
     }
 
     .logo {
+        width: 180px;
+    }
 
-        width: 90px;
+    .goalCard {
+        font-size: 1.4rem;
     }
 }

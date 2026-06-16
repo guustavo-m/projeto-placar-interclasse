@@ -1,44 +1,68 @@
 const pool = require("../config/db");
 
+console.log("GOL MODEL CARREGADO");
+
 class Gol {
 
-    static async criar(
+static async criar(
+    partidaId,
+    jogadorId,
+    equipeId,
+    lado,
+    minuto
+) {
+
+    console.log("MODEL:", {
         partidaId,
         jogadorId,
+        equipeId,
         lado,
         minuto
-    ) {
+    });
 
-        const resultado =
-            await pool.query(
-                `
-                INSERT INTO gols
-                (
-                    partida_id,
-                    jogador_id,
-                    lado,
-                    minuto
-                )
-                VALUES
-                (
-                    $1,
-                    $2,
-                    $3,
-                    $4
-                )
-                RETURNING *
-                `,
-                [
-                    partidaId,
-                    jogadorId,
-                    lado,
-                    minuto
-                ]
-            );
+    console.log(
+    "PARAMS:",
+    [
+        partidaId,
+        jogadorId,
+        equipeId,
+        lado,
+        minuto
+    ]
+);
 
-        return resultado.rows[0];
+    const resultado =
+        await pool.query(
+            `
+            INSERT INTO gols
+            (
+                partida_id,
+                jogador_id,
+                equipe_id,
+                lado,
+                minuto
+            )
+            VALUES
+            (
+                $1,
+                $2,
+                $3,
+                $4,
+                $5
+            )
+            RETURNING *
+            `,
+            [
+                partidaId,
+                jogadorId,
+                equipeId,
+                lado,
+                minuto
+            ]
+        );
 
-    }
+    return resultado.rows[0];
+}
 
     static async listarPorPartida(
         partidaId

@@ -11,23 +11,42 @@ class GolController {
         res
     ) {
 
+        console.log("BODY:", req.body);
+        console.log(req.body);
+
         try {
 
             const {
 
                 partida_id,
                 jogador_id,
+                equipe_id,
                 lado,
                 minuto
 
             } = req.body;
 
-            const gol =
-                await Gol.criar(
-                    partida_id,
-                    jogador_id,
-                    minuto
-                );
+            console.log({
+                partida_id,
+                jogador_id,
+                equipe_id,
+                lado,
+                minuto
+            });
+
+console.log("ANTES DO MODEL");
+
+const gol =
+    await Gol.criar(
+        partida_id,
+        jogador_id,
+        equipe_id,
+        lado,
+        minuto
+    );
+
+console.log("DEPOIS DO MODEL");
+
 
             await Partida.adicionarGol(
                 partida_id,
@@ -41,6 +60,8 @@ class GolController {
 
             const io =
                 req.app.get("io");
+
+                console.log(partidaAtualizada);
 
             io.emit(
                 "partidaAtualizada",
@@ -153,6 +174,8 @@ class GolController {
 
             const io =
                 req.app.get("io");
+
+                console.log(partidaAtualizada);
 
             io.emit(
                 "partidaAtualizada",

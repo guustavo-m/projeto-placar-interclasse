@@ -1,11 +1,11 @@
-import catar from "../assets/catar.jpg";
-import holanda from "../assets/holanda.jpg";
-import marrocos from "../assets/marrocos.jpg";
-import colombia from "../assets/colombia.jpg";
-import haiti from "../assets/haiti.jpg";
-import equador from "../assets/equador.jpg";
-import mexico from "../assets/mexico.jpg";
-import novaZelandia from "../assets/nova-zelandia.jpg";
+import catar from "../../public/catar.jpg";
+import holanda from "../../public/holanda.jpg";
+import marrocos from "../../public/marrocos.jpg";
+import colombia from "../../public/colombia.jpg";
+import haiti from "../../public/haiti.jpg";
+import equador from "../../public/equador.jpg";
+import mexico from "../../public/mexico.jpg";
+import novaZelandia from "../../public/nova-zelandia.jpg";
 
 export const teams = [
     {

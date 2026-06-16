@@ -93,6 +93,7 @@ function ControlPannel() {
     }
 
     async function confirmarGol() {
+        console.log("CONFIRMAR GOL");
 
         if (!jogadorSelecionado)
             return;
@@ -110,32 +111,31 @@ function ControlPannel() {
             ) / 60
         ) + 1;
 
-        await api.post(
-            "/gols",
-            {
+        console.log(partida);
+        console.log("lado:", ladoSelecionado);
+        console.log("equipeA:", partida.equipe_a);
+        console.log("equipeB:", partida.equipe_b);
+        console.log("minuto:", minutoAtual);
+        console.log("equipeId:", equipeId);
 
-                partida_id:
-                    partida.id,
+        const dados = {
+            partida_id: partida.id,
+            jogador_id: Number(jogadorSelecionado),
+            equipe_id: equipeId,
+            lado: ladoSelecionado,
+            minuto: minutoAtual
+        };
 
-                jogador_id:
-                    Number(jogadorSelecionado),
+        console.log("ENVIANDO:", dados);
 
-                equipe_id:
-                    equipeId,
-
-                lado:
-                    ladoSelecionado,
-
-                minuto:
-                    minutoAtual
-
-            }
-        );
+        await api.post("/gols", dados);
 
         const golsAtualizados =
             await api.get(
                 `/gols/partida/${partida.id}`
             );
+
+        console.log("equipeId:", equipeId);
 
         setGols(
             golsAtualizados.data

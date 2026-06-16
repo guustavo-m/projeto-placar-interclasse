@@ -3,10 +3,12 @@ import { useEffect, useState } from "react";
 import api from "../../services/api";
 import socket from "../../services/socket";
 import styles from "./FutsalScoreboard.module.css";
+import interclasseLogo from "../../../public/logo_copa.png";
 
 function FutsalScoreboard() {
 
-    const [partida, setPartida] = useState(null);
+    const [partida, setPartida] =
+        useState(null);
 
     useEffect(() => {
 
@@ -15,15 +17,19 @@ function FutsalScoreboard() {
             try {
 
                 const resposta =
-                    await api.get("/partidas");
+                    await api.get(
+                        "/partidas/atual"
+                    );
 
                 setPartida(
-                    resposta.data[0]
+                    resposta.data
                 );
 
             } catch (erro) {
 
-                console.error(erro);
+                console.error(
+                    erro
+                );
 
             }
 
@@ -34,8 +40,10 @@ function FutsalScoreboard() {
         socket.on(
             "partidaAtualizada",
             dados => {
-
-                setPartida(dados);
+                console.log(dados);
+                setPartida(
+                    dados
+                );
 
             }
         );
@@ -60,149 +68,232 @@ function FutsalScoreboard() {
 
     }
 
+    const teamA = {
+        nome:
+            partida.nome_time_a,
+        cor:
+            partida.cor_time_a,
+        bandeira:
+            partida.bandeira_a
+    };
+
+    const teamB = {
+        nome:
+            partida.nome_time_b,
+        cor:
+            partida.cor_time_b,
+        bandeira:
+            partida.bandeira_b
+    };
+
+    const golsTimeA =
+        partida.gols?.filter(
+            gol =>
+                gol.equipe_id ===
+                partida.equipe_a
+        ) || [];
+
+    const golsTimeB =
+        partida.gols?.filter(
+            gol =>
+                gol.equipe_id ===
+                partida.equipe_b
+        ) || [];
+
+    const minutos =
+        Math.floor(
+            partida.tempo_restante / 60
+        );
+
+    const segundos =
+        partida.tempo_restante % 60;
+
+    const tempoFormatado =
+        `${String(
+            minutos
+        ).padStart(2, "0")}:${String(
+            segundos
+        ).padStart(2, "0")}`;
+
+        console.log(partida);
+        console.log(partida.gols);
+
     return (
 
         <div className={styles.container}>
+
+            {/* LADO ESQUERDO */}
 
             <div
                 className={styles.sideA}
                 style={{
                     backgroundColor:
-                        teamA?.cor || "#8B0000"
+                        teamA.cor ||
+                        "#F2B04D"
                 }}
             >
-
-                <div className={styles.teamBox}>
-                    {teamA?.nome}
+            <div className={styles.teamBoxContainerA}>
+                <div className={styles.teamBox} style={{color: teamA.cor}}>
+                    {teamA.nome}
                 </div>
 
-                <div className={styles.flagContainer}>
+                <div
+                    className={
+                        styles.flagContainer
+                    }
+                >
+
+                    <img
+                        src={teamA.bandeira}
+                        alt={teamA.nome}
+                        className={
+                            styles.flag
+                        }
+                    />
+
+                </div>
+                </div>
+
+                <div
+                    className={
+                        styles.goalsContainerA
+                    }
+                >
 
                     {
-                        teamA &&
-                        (
-                            <img
-                                src={teamA.bandeira}
-                                alt={teamA.nome}
-                                className={styles.flag}
-                            />
+                        golsTimeA.map(
+                            gol => (
+
+                                <div
+                                    key={
+                                        gol.id
+                                    }
+                                    className={
+                                        styles.goalCard
+                                    }
+                                >
+
+                                    <span>
+                                        {
+                                            gol.jogador
+                                        }
+                                    </span>
+
+                                    <strong>
+                                        {
+                                            gol.minuto
+                                        }
+                                        '
+                                    </strong>
+
+                                </div>
+
+                            )
                         )
                     }
 
                 </div>
 
-                <div className={styles.scorers}>
-
-                    <h3>ARTILHEIROS</h3>
-
-                    <ul>
-                        <li>---</li>
-                        <li>---</li>
-                        <li>---</li>
-                    </ul>
-
-                </div>
-
             </div>
+
+            {/* CENTRO */}
+
+
+<div className={styles.timer}>
+    {tempoFormatado}
+</div>
+
+<div className={styles.score}>
+
+    <div className={styles.scoreA}>
+        {partida.placar_a}
+    </div>
+
+    <div className={styles.scoreB}>
+        {partida.placar_b}
+    </div>
+
+</div>
+
+<div className={styles.logoContainer}>
+
+    <img
+        src={interclasseLogo}
+        alt="Logo"
+        className={styles.logo}
+    />
+
+</div>
+
+            {/* LADO DIREITO */}
 
             <div
                 className={styles.sideB}
                 style={{
                     backgroundColor:
-                        teamB?.cor || "#0A4D68"
+                        teamB.cor ||
+                        "#B0124E"
                 }}
             >
-
-                <div className={styles.teamBox}>
-                    {teamB?.nome}
+                <div className={styles.teamBoxContainerB}>
+                <div className={styles.teamBox} style={{color: teamB.cor}}>
+                    {teamB.nome}
                 </div>
 
-                <div className={styles.flagContainer}>
-
-                    {
-                        teamB &&
-                        (
-                            <img
-                                src={teamB.bandeira}
-                                alt={teamB.nome}
-                                className={styles.flag}
-                            />
-                        )
+                <div
+                    className={
+                        styles.flagContainer
                     }
-
-                </div>
-
-                <div className={styles.scorers}>
-
-                    <h3>ARTILHEIROS</h3>
-
-                    <ul>
-                        <li>---</li>
-                        <li>---</li>
-                        <li>---</li>
-                    </ul>
-
-                </div>
-
-            </div>
-
-            <div className={styles.overlay}>
-
-                <div className={styles.timer}>
-
-                    {
-                        partida.tempoFormatado
-                    }
-
-                </div>
-
-                <div className={styles.score}>
-
-                    <span>
-                        {partida.placar_a}
-                    </span>
-
-                    <span className={styles.separator}>
-                        :
-                    </span>
-
-                    <span>
-                        {partida.placar_b}
-                    </span>
-
-                </div>
-
-                <div className={styles.fouls}>
-
-                    <div>
-
-                        FALTAS
-
-                        <strong>
-                            {partida.faltas_a}
-                        </strong>
-
-                    </div>
-
-                    <div>
-
-                        FALTAS
-
-                        <strong>
-                            {partida.faltas_b}
-                        </strong>
-
-                    </div>
-
-                </div>
-
-                <div className={styles.logoContainer}>
+                >
 
                     <img
-                        src="/logo-interclasse.png"
-                        alt="Interclasse"
-                        className={styles.logo}
+                        src={teamB.bandeira}
+                        alt={teamB.nome}
+                        className={
+                            styles.flag
+                        }
                     />
+
+                </div>
+                </div>
+
+                <div
+                    className={
+                        styles.goalsContainerB
+                    }
+                >
+
+                    {
+                        golsTimeB.map(
+                            gol => (
+
+                                <div
+                                    key={
+                                        gol.id
+                                    }
+                                    className={
+                                        styles.goalCard
+                                    }
+                                >
+
+                                    <span>
+                                        {
+                                            gol.jogador
+                                        }
+                                    </span>
+
+                                    <strong>
+                                        {
+                                            gol.minuto
+                                        }
+                                        '
+                                    </strong>
+
+                                </div>
+
+                            )
+                        )
+                    }
 
                 </div>
 
