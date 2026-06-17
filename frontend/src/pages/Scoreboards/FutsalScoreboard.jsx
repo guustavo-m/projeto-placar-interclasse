@@ -74,7 +74,7 @@ function FutsalScoreboard() {
         cor:
             partida.cor_time_a,
         bandeira:
-            partida.bandeira_a
+            partida.bandeira_a.replace("./", "/")
     };
 
     const teamB = {
@@ -83,7 +83,7 @@ function FutsalScoreboard() {
         cor:
             partida.cor_time_b,
         bandeira:
-            partida.bandeira_b
+            partida.bandeira_b.replace("./", "/")
     };
 
     const golsTimeA =

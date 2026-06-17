@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Scoreboard from "./pages/Scoreboards/FutsalScoreboard";
 import ControlPannel from "./pages/ControlPannel/ControlPannel";
 import MatchSetup from "./pages/MatchSetup/MatchSetup";
+import FutsalScoreboard from "./pages/Scoreboards/FutsalScoreboard";
 
 function App() {
 
@@ -23,6 +24,11 @@ function App() {
                 <Route
                     path="/controle"
                     element={<ControlPannel />}
+                />
+
+                <Route
+                    path="/placar/:id"
+                    element={<FutsalScoreboard />}
                 />
 
             </Routes>

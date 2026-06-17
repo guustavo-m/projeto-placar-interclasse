@@ -50,11 +50,12 @@
     margin-top: 25px;
 
     min-width: 260px;
-    max-width: 400px;
+    max-width: 300px;
     padding-left: 10px;
     padding-right: 10px;
+    text-align: center;
 
-    height: 80px;
+    height: 130px;
 
     background: #f0f0f0;
 

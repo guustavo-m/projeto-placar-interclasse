@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from './MatchSetup.module.css'
 import { teams } from "../../data/teams";
+import api from "../../services/api";
 
 function MatchSetup() {
 
@@ -13,28 +14,39 @@ function MatchSetup() {
     const [modalidade, setModalidade] = useState("futsal");
 
     const [tempo, setTempo] = useState(10);
+    const { id } = useParams();
 
-    function iniciarPartida() {
+async function iniciarPartida() {
 
-        if (!timeA || !timeB) {
+    if (!timeA || !timeB) {
+        alert("Selecione os dois times");
+        return;
+    }
 
-            alert("Selecione os dois times");
+    try {
 
-            return;
-        }
+        const resposta =
+            await api.post(
+                "/partidas",
+                {
+                    modalidade_id: 1, // depois você pode mapear futsal, vôlei etc
+                    equipe_a: Number(timeA),
+                    equipe_b: Number(timeB),
+                    tempo_inicial: Number(tempo) * 60
+                }
+            );
 
-        localStorage.setItem(
-            "partida",
-            JSON.stringify({
-                timeA,
-                timeB,
-                modalidade,
-                tempo
-            })
+        navigate(
+            `/placar/${resposta.data.id}`
         );
 
-        navigate("/placar");
+    } catch (erro) {
+
+        console.error(erro);
+
     }
+
+}
 
 return (
 

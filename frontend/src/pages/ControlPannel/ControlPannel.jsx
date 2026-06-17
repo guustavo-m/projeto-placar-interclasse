@@ -18,7 +18,7 @@ function ControlPannel() {
         async function carregar() {
             try {
                 const resposta =
-                    await api.get("/partidas");
+                    await api.get(`/partidas/${id}`);
                 const partidaAtual =
                     resposta.data[0];
                 setPartida(
