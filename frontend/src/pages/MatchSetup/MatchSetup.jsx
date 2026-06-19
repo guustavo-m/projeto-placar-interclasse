@@ -12,6 +12,7 @@ function MatchSetup() {
     const [timeB, setTimeB] = useState("");
 
     const [modalidade, setModalidade] = useState("futsal");
+    const [modalidades, setModalidades] = useState([]);
 
     const [tempo, setTempo] = useState(10);
 
@@ -32,7 +33,7 @@ async function iniciarPartida() {
             await api.post(
                 "/partidas",
                 {
-                    modalidade_id: 1, // depois você pode mapear futsal, vôlei etc
+                    modalidade_id: Number(modalidade),
                     equipe_a: Number(timeA),
                     equipe_b: Number(timeB),
                     tempo_inicial: Number(tempo) * 60
@@ -71,6 +72,19 @@ useEffect(() => {
     carregarEquipes();
 
 }, [modalidade, periodo]);
+
+useEffect(() => {
+    async function carregarModalidades() {
+        try {
+            const resposta = await api.get("/modalidades");
+            setModalidades(resposta.data);
+        } catch (erro) {
+            console.error("Erro ao buscar modalidades:", erro);
+        }
+    }
+
+    carregarModalidades();
+}, []);
 
 return (
 
@@ -115,23 +129,15 @@ return (
                 <select
                     className={styles.select}
                     value={modalidade}
-                    onChange={(e) =>
-                        setModalidade(e.target.value)
-                    }
+                    onChange={(e) => setModalidade(e.target.value)}
                 >
+                    <option value="">Selecione uma modalidade</option>
 
-                    <option value="futsal">
-                        ⚽ Futsal
-                    </option>
-
-                    <option value="volei">
-                        🏐 Vôlei
-                    </option>
-
-                    <option value="handebol">
-                        🤾 Handebol
-                    </option>
-
+                    {modalidades.map((m) => (
+                        <option key={m.id} value={m.id}>
+                            {m.label}
+                        </option>
+                    ))}
                 </select>
 
             </div>

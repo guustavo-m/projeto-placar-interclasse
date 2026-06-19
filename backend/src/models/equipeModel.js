@@ -114,7 +114,7 @@ SELECT
 FROM equipes e
 INNER JOIN modalidades m
     ON m.id = e.modalidade_id
-WHERE m.nome = $1
+WHERE e.modalidade_id = $1
 AND e.periodo = $2
 ORDER BY e.nome
             `,

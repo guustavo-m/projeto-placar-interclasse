@@ -4,6 +4,7 @@ import Scoreboard from "./pages/Scoreboards/FutsalScoreboard";
 import ControlPannel from "./pages/ControlPannel/ControlPannel";
 import MatchSetup from "./pages/MatchSetup/MatchSetup";
 import FutsalScoreboard from "./pages/Scoreboards/FutsalScoreboard";
+import Home from "./pages/Home/Home";
 
 function App() {
 
@@ -13,22 +14,22 @@ function App() {
             <Routes>
                 <Route
                     path="/"
-                    element={<MatchSetup />}
+                    element={<Home />}
                 />
 
                 <Route
-                    path="/placar"
-                    element={<Scoreboard />}
-                />
-                
-                <Route
-                    path="/controle/:id"
-                    element={<ControlPannel />}
+                    path="/configurar"
+                    element={<MatchSetup />}
                 />
 
                 <Route
                     path="/placar/:id"
                     element={<FutsalScoreboard />}
+                />
+
+                <Route
+                    path="/controle/:id"
+                    element={<ControlPannel />}
                 />
 
             </Routes>

@@ -125,10 +125,10 @@ static async listarPorFiltro(
 
     try {
 
-        const {
-            modalidade,
-            periodo
-        } = req.query;
+        const modalidade = Number(req.query.modalidade);
+        const periodo = req.query.periodo;
+
+        console.log("FILTRO:", modalidade, periodo);
 
         console.log(req.query);
         const equipes =
