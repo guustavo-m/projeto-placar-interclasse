@@ -230,6 +230,22 @@ function ControlPannel() {
 
 }
 
+async function finalizarPartida() {
+
+    await api.put(
+        `/partidas/${partida.id}/finalizar`
+    );
+
+}
+
+async function retomarPartida() {
+
+    await api.put(
+        `/partidas/${partida.id}/retomar`
+    );
+
+}
+
     if (!partida) {
 
         return <h1>Carregando...</h1>;
@@ -243,6 +259,12 @@ function ControlPannel() {
             <h1 className={styles.title}>
                 Painel de Controle
             </h1>
+
+            {partida.finalizada && (
+                <div className={styles.finalizada}>
+                    🏁 Partida Finalizada
+                </div>
+            )}
 
             <div className={styles.score}>
                 {partida.placar_a} x {partida.placar_b}
@@ -266,6 +288,7 @@ function ControlPannel() {
 
                             <button
                                 className={`${styles.btn} ${styles.btnAdd}`}
+                                disabled={partida.finalizada}
                                 onClick={() => abrirModalGol("A")}
                             >
                                 + Gol
@@ -300,6 +323,7 @@ function ControlPannel() {
                                             ({gol.minuto}')
 
                                             <button
+                                            disabled={partida.finalizada}
                                                 onClick={() =>
                                                     anularGol(
                                                         gol.id
@@ -334,6 +358,7 @@ function ControlPannel() {
                         <div className={styles.buttons}>
 
                             <button
+                                disabled={partida.finalizada}
                                 className={`${styles.btn} ${styles.btnAdd}`}
                                 onClick={() => abrirModalGol("B")}
                             >
@@ -369,6 +394,7 @@ function ControlPannel() {
                                             ({gol.minuto}')
 
                                             <button
+                                            disabled={partida.finalizada}
                                                 onClick={() =>
                                                     anularGol(
                                                         gol.id
@@ -402,6 +428,7 @@ function ControlPannel() {
                     />
 
                     <button
+                    disabled={partida.finalizada}
                         onClick={alterarTempo}
                         className={styles.alterTimeButton}
                     >
@@ -422,6 +449,7 @@ function ControlPannel() {
                     <div className={styles.buttons}>
 
                         <button
+                        disabled={partida.finalizada}
                             className={`${styles.btn} ${styles.btnAdd}`}
                             onClick={iniciarCronometro}
                         >
@@ -429,6 +457,7 @@ function ControlPannel() {
                         </button>
 
                         <button
+                        disabled={partida.finalizada}
                             className={`${styles.btn} ${styles.btnRemove}`}
                             onClick={pararCronometro}
                         >
@@ -436,11 +465,30 @@ function ControlPannel() {
                         </button>
 
                         <button
+                        disabled={partida.finalizada}
                             className={styles.btn}
                             onClick={resetarCronometro}
                         >
                             🔄 Resetar
                         </button>
+
+                        {
+                            partida.finalizada ? (
+                                <button
+                                    className={styles.btn}
+                                    onClick={retomarPartida}
+                                >
+                                    ▶️ Retomar Partida
+                                </button>
+                            ) : (
+                                <button
+                                    className={styles.btn}
+                                    onClick={finalizarPartida}
+                                >
+                                    🏁 Finalizar Partida
+                                </button>
+                            )
+                        }
 
                     </div>
 

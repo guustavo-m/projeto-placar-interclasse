@@ -69,5 +69,15 @@ router.put(
     PartidaController.alterarTempo
 );
 
+router.put(
+    "/:id/finalizar",
+    PartidaController.finalizarPartida
+);
+
+router.put(
+    "/:id/retomar",
+    PartidaController.retomarPartida
+);
+
 module.exports =
     router;

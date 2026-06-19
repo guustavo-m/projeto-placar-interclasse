@@ -368,6 +368,37 @@ static async alterarTempo(
 
 }
 
+static async finalizarPartida(partidaId) {
+
+    const resultado = await pool.query(
+        `
+        UPDATE partidas
+        SET
+            finalizada = true,
+            em_andamento = false
+        WHERE id = $1
+        RETURNING *
+        `,
+        [partidaId]
+    );
+
+    return resultado.rows[0];
+}
+
+static async retomarPartida(partidaId) {
+
+    const resultado = await pool.query(
+        `
+        UPDATE partidas
+        SET finalizada = false
+        WHERE id = $1
+        RETURNING *
+        `,
+        [partidaId]
+    );
+
+    return resultado.rows[0];
+}
 }
 
 module.exports = Partida;

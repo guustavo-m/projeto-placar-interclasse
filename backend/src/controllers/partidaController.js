@@ -472,6 +472,44 @@ static async alterarTempo(
 
 }
 
+static async finalizarPartida(req, res) {
+
+    const { id } = req.params;
+
+    await Partida.finalizarPartida(id);
+
+    const partida =
+        await Partida.buscarCompleta(id);
+
+    req.app
+        .get("io")
+        .emit(
+            "partidaAtualizada",
+            partida
+        );
+
+    return res.json(partida);
+}
+
+static async retomarPartida(req, res) {
+
+    const { id } = req.params;
+
+    await Partida.retomarPartida(id);
+
+    const partida =
+        await Partida.buscarCompleta(id);
+
+    req.app
+        .get("io")
+        .emit(
+            "partidaAtualizada",
+            partida
+        );
+
+    return res.json(partida);
+}
+
 }
 
 module.exports =
