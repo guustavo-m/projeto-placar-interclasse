@@ -510,6 +510,98 @@ static async retomarPartida(req, res) {
     return res.json(partida);
 }
 
+static async adicionarSet(
+    req,
+    res
+) {
+
+    try {
+
+        const {
+            id,
+            lado
+        } = req.params;
+
+        await Partida.adicionarSet(
+            id,
+            lado
+        );
+
+        const partida =
+            await Partida.buscarCompleta(
+                id
+            );
+
+        req.app
+            .get("io")
+            .emit(
+                "partidaAtualizada",
+                partida
+            );
+
+        return res.json(
+            partida
+        );
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        return res.status(500).json({
+            erro:
+                "Erro ao adicionar set"
+        });
+
+    }
+
+}
+
+static async removerSet(
+    req,
+    res
+) {
+
+    try {
+
+        const {
+            id,
+            lado
+        } = req.params;
+
+        await Partida.removerSet(
+            id,
+            lado
+        );
+
+        const partida =
+            await Partida.buscarCompleta(
+                id
+            );
+
+        req.app
+            .get("io")
+            .emit(
+                "partidaAtualizada",
+                partida
+            );
+
+        return res.json(
+            partida
+        );
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        return res.status(500).json({
+            erro:
+                "Erro ao remover set"
+        });
+
+    }
+
+}
+
 }
 
 module.exports =

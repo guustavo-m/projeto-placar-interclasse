@@ -399,6 +399,52 @@ static async retomarPartida(partidaId) {
 
     return resultado.rows[0];
 }
+
+static async adicionarSet(
+    partidaId,
+    lado
+) {
+
+    const coluna =
+        lado === "A"
+            ? "sets_a"
+            : "sets_b";
+
+    await pool.query(
+        `
+        UPDATE partidas
+        SET ${coluna} = ${coluna} + 1
+        WHERE id = $1
+        `,
+        [partidaId]
+    );
+
+}
+
+static async removerSet(
+    partidaId,
+    lado
+) {
+
+    const coluna =
+        lado === "A"
+            ? "sets_a"
+            : "sets_b";
+
+    await pool.query(
+        `
+        UPDATE partidas
+        SET ${coluna} =
+            GREATEST(
+                ${coluna} - 1,
+                0
+            )
+        WHERE id = $1
+        `,
+        [partidaId]
+    );
+
+}
 }
 
 module.exports = Partida;

@@ -1,0 +1,52 @@
+.container {
+
+    width: 100vw;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+
+    padding: 40px;
+
+    background: #f5f5f5;
+}
+
+.teamCard {
+
+    width: 400px;
+
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 30px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    box-shadow:
+        0 0 15px
+        rgba(0,0,0,.1);
+}
+
+.score {
+
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+button {
+
+    height: 60px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    font-size: 1.1rem;
+    font-weight: bold;
+
+    cursor: pointer;
+}
