@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import api from "../../services/api";
 import socket from "../../services/socket";
 import styles from "./ControlPannel.module.css";
@@ -13,17 +14,20 @@ function ControlPannel() {
         useState(null);
     const [jogadorSelecionado, setJogadorSelecionado] =
         useState(null);
-
-    useEffect(() => {
+        const [novoTempo, setNovoTempo] =
+    useState("");
+    const { id } = useParams();
+    
+        useEffect(() => {
         async function carregar() {
             try {
                 const resposta =
                     await api.get(`/partidas/${id}`);
+
                 const partidaAtual =
-                    resposta.data[0];
-                setPartida(
-                    partidaAtual
-                );
+                    resposta.data;
+
+                setPartida(partidaAtual);
 
                 if (partidaAtual) {
                     const golsResposta =
@@ -193,7 +197,7 @@ function ControlPannel() {
     async function iniciarCronometro() {
 
         await api.put(
-            "/partidas/cronometro/start"
+            `/partidas/${partida.id}/cronometro/start`
         );
 
     }
@@ -201,7 +205,7 @@ function ControlPannel() {
     async function pararCronometro() {
 
         await api.put(
-            "/partidas/cronometro/stop"
+            `/partidas/${partida.id}/cronometro/stop`
         );
 
     }
@@ -209,10 +213,22 @@ function ControlPannel() {
     async function resetarCronometro() {
 
         await api.put(
-            "/partidas/cronometro/reset"
+            `/partidas/${partida.id}/cronometro/reset`
         );
 
     }
+
+    async function alterarTempo() {
+
+    await api.put(
+        `/partidas/${partida.id}/tempo`,
+        {
+            tempo_restante:
+                Number(novoTempo) * 60
+        }
+    );
+
+}
 
     if (!partida) {
 
@@ -301,32 +317,6 @@ function ControlPannel() {
 
                     </div>
 
-                    <div className={styles.section}>
-
-                        <p className={styles.sectionTitle}>
-                            Faltas
-                        </p>
-
-                        <div className={styles.buttons}>
-
-                            <button
-                                className={`${styles.btn} ${styles.btnAdd}`}
-                                onClick={() => adicionarFalta("A")}
-                            >
-                                + Falta
-                            </button>
-
-                            <button
-                                className={`${styles.btn} ${styles.btnRemove}`}
-                                onClick={() => removerFalta("A")}
-                            >
-                                - Falta
-                            </button>
-
-                        </div>
-
-                    </div>
-
                 </div>
 
                 <div className={styles.teamCard}>
@@ -396,34 +386,66 @@ function ControlPannel() {
 
                     </div>
 
-                    <div className={styles.section}>
+                </div>
 
-                        <p className={styles.sectionTitle}>
-                            Faltas
-                        </p>
+            <div className={styles.timeContainer}>
+                <div className={styles.timeEditor}>
 
-                        <div className={styles.buttons}>
+                    <input
+                        type="number"
+                        value={novoTempo}
+                        className={styles.alterTimeInput}
+                        onChange={(e) =>
+                            setNovoTempo(e.target.value)
+                        }
+                        placeholder="Minutos"
+                    />
 
-                            <button
-                                className={`${styles.btn} ${styles.btnAdd}`}
-                                onClick={() => adicionarFalta("B")}
-                            >
-                                + Falta
-                            </button>
+                    <button
+                        onClick={alterarTempo}
+                        className={styles.alterTimeButton}
+                    >
+                        Alterar Tempo
+                    </button>
 
-                            <button
-                                className={`${styles.btn} ${styles.btnRemove}`}
-                                onClick={() => removerFalta("B")}
-                            >
-                                - Falta
-                            </button>
+                </div>
 
-                        </div>
+                <div className={styles.cronometro}>
+                    <h2>
+                        {Math.floor(partida.tempo_restante / 60)}
+                        :
+                        {(partida.tempo_restante % 60)
+                            .toString()
+                            .padStart(2, "0")}
+                    </h2>
+
+                    <div className={styles.buttons}>
+
+                        <button
+                            className={`${styles.btn} ${styles.btnAdd}`}
+                            onClick={iniciarCronometro}
+                        >
+                            ▶️ Iniciar
+                        </button>
+
+                        <button
+                            className={`${styles.btn} ${styles.btnRemove}`}
+                            onClick={pararCronometro}
+                        >
+                            ⏸️ Parar
+                        </button>
+
+                        <button
+                            className={styles.btn}
+                            onClick={resetarCronometro}
+                        >
+                            🔄 Resetar
+                        </button>
 
                     </div>
 
                 </div>
-
+            </div>
             </div>
 
             {

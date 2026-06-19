@@ -2,7 +2,11 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
+const pool =
+    require("./config/db");
 
+const Partida =
+    require("./models/partidaModel");
 const http = require("http");
 const { Server } = require("socket.io");
 
@@ -86,6 +90,69 @@ io.on(
         );
 
     }
+);
+
+setInterval(
+    async () => {
+
+        try {
+
+            const resultado =
+                await pool.query(
+                    `
+                    SELECT id
+                    FROM partidas
+                    WHERE em_andamento = true
+                    `
+                );
+
+            for (
+                const partida of resultado.rows
+            ) {
+
+                await pool.query(
+                    `
+                    UPDATE partidas
+                    SET
+                        tempo_restante =
+                            GREATEST(
+                                tempo_restante - 1,
+                                0
+                            ),
+                        em_andamento =
+                            CASE
+                                WHEN tempo_restante <= 1
+                                THEN false
+                                ELSE true
+                            END
+                    WHERE id = $1
+                    `,
+                    [partida.id]
+                );
+
+                const atualizada =
+                    await Partida.buscarCompleta(
+                        partida.id
+                    );
+
+                io.emit(
+                    "partidaAtualizada",
+                    atualizada
+                );
+
+            }
+
+        } catch (erro) {
+
+            console.error(
+                "Erro no cronômetro:",
+                erro
+            );
+
+        }
+
+    },
+    1000
 );
 
 server.listen(

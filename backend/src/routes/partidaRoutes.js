@@ -50,18 +50,23 @@ router.put(
 );
 
 router.put(
-    "/cronometro/start",
+    "/:id/cronometro/start",
     PartidaController.iniciarCronometro
 );
 
 router.put(
-    "/cronometro/stop",
+    "/:id/cronometro/stop",
     PartidaController.pararCronometro
 );
 
 router.put(
-    "/cronometro/reset",
+    "/:id/cronometro/reset",
     PartidaController.resetarCronometro
+);
+
+router.put(
+    "/:id/tempo",
+    PartidaController.alterarTempo
 );
 
 module.exports =

@@ -20,6 +20,11 @@ router.get(
 );
 
 router.get(
+    "/filtro",
+    EquipeController.listarPorFiltro
+);
+
+router.get(
     "/:id",
     EquipeController.buscarPorId
 );

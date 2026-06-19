@@ -345,6 +345,29 @@ static async resetarCronometro(
 
 }
 
+static async alterarTempo(
+    partidaId,
+    tempo
+) {
+
+    const resultado =
+        await pool.query(
+            `
+            UPDATE partidas
+            SET tempo_restante = $1
+            WHERE id = $2
+            RETURNING *
+            `,
+            [
+                tempo,
+                partidaId
+            ]
+        );
+
+    return resultado.rows[0];
+
+}
+
 }
 
 module.exports = Partida;

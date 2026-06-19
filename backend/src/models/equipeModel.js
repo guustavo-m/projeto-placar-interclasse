@@ -90,6 +90,49 @@ class Equipe {
 
     }
 
+static async listarPorFiltro(
+    modalidade,
+    periodo
+) {
+
+        console.log(
+        "FILTRO:",
+        modalidade,
+        periodo
+    );
+
+    const resultado =
+        await pool.query(
+            `
+SELECT
+    e.id,
+    e.nome,
+    e.cor,
+    e.bandeira,
+    e.modalidade_id,
+    e.periodo
+FROM equipes e
+INNER JOIN modalidades m
+    ON m.id = e.modalidade_id
+WHERE m.nome = $1
+AND e.periodo = $2
+ORDER BY e.nome
+            `,
+            [
+                modalidade,
+                periodo
+            ]
+        );
+
+            console.log(
+        "RESULTADO:",
+        resultado.rows
+    );
+
+    return resultado.rows;
+
+}
+
 }
 
 module.exports = Equipe;

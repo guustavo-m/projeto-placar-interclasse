@@ -1,213 +1,325 @@
 .container {
-
     min-height: 100vh;
+    background: linear-gradient(
+        135deg,
+        #002b5c,
+        #004080,
+        #006847
+    );
 
     padding: 30px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    background:
-        linear-gradient(
-            135deg,
-            #22003d,
-            #3b0764,
-            #5b21b6
-        );
-
     color: white;
-
-    font-family: Arial, Helvetica, sans-serif;
 }
 
 .title {
-
-    font-size: 3rem;
-
-    font-weight: 800;
-
-    margin-bottom: 30px;
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #ffd700;
 }
 
 .score {
-
-    font-size: 5rem;
-
-    font-weight: 900;
-
+    text-align: center;
+    font-size: 4rem;
+    font-weight: bold;
     margin-bottom: 30px;
+    color: white;
+    text-shadow: 0 0 15px rgba(255,255,255,.4);
 }
 
 .teamsContainer {
-
-    width: 100%;
-
-    max-width: 1400px;
-
-    display: grid;
-
-    grid-template-columns: 1fr 1fr;
-
-    gap: 30px;
-
-    margin-bottom: 30px;
+    display: flex;
+    gap: 25px;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .teamCard {
-
     background: rgba(255,255,255,.08);
-
     backdrop-filter: blur(10px);
 
+    border: 2px solid rgba(255,255,255,.15);
     border-radius: 20px;
 
+    width: 450px;
     padding: 25px;
 
-    text-align: center;
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.3);
 }
 
 .teamName {
-
-    font-size: 2rem;
-
-    font-weight: 800;
-
-    margin-bottom: 25px;
-}
-
-.section {
-
+    text-align: center;
+    font-size: 1.8rem;
+    color: #ffd700;
     margin-bottom: 20px;
 }
 
+.section {
+    margin-top: 20px;
+}
+
 .sectionTitle {
-
     font-size: 1.2rem;
-
-    font-weight: 700;
-
-    margin-bottom: 10px;
+    font-weight: bold;
+    margin-bottom: 12px;
+    color: white;
 }
 
 .buttons {
-
     display: flex;
-
-    justify-content: center;
-
     gap: 10px;
+    flex-wrap: wrap;
 }
 
 .btn {
-
     border: none;
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .2s;
+}
 
-    padding: 14px 20px;
+.btn:hover {
+    transform: translateY(-2px);
+}
 
+.btnAdd {
+    background: #00c853;
+    color: white;
+}
+
+.btnRemove {
+    background: #d50000;
+    color: white;
+}
+
+.goalList {
+    margin-top: 20px;
+    background: rgba(255,255,255,.05);
     border-radius: 12px;
+    padding: 15px;
+}
+
+.goalList h3 {
+    color: #ffd700;
+    margin-bottom: 10px;
+}
+
+.goalList div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 8px;
+    padding: 8px;
+
+    background: rgba(255,255,255,.05);
+    border-radius: 8px;
+}
+
+.goalList button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.modalBackdrop {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0,0,0,.75);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 999;
+}
+
+.modal {
+    background: white;
+    color: #002b5c;
+
+    padding: 25px;
+    border-radius: 20px;
+
+    min-width: 350px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.modal h2 {
+    text-align: center;
+}
+
+.modal select,
+.modal input {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.modal button {
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.modal button:first-of-type {
+    background: #00c853;
+    color: white;
+}
+
+.modal button:last-of-type {
+    background: #d50000;
+    color: white;
+}
+
+.timeControls {
+    margin-top: 25px;
+
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.timeControls button {
+    border: none;
+    border-radius: 10px;
+
+    padding: 10px 16px;
+
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.timeControls button:nth-child(1) {
+    background: #00c853;
+    color: white;
+}
+
+.timeControls button:nth-child(2) {
+    background: #ff9800;
+    color: white;
+}
+
+.timeControls button:nth-child(3) {
+    background: #d50000;
+    color: white;
+}
+
+.timeControls button:nth-child(4) {
+    background: #1976d2;
+    color: white;
+}
+
+.timeControls input {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    width: 100px;
+    text-align: center;
+}
+
+.timeEditor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.timeContainer {
+    display: flex;
+    gap: 150px;
+}
+
+.alterTimeInput {
+    width: 120px;
+
+    padding: 12px;
+
+    border: 2px solid #ffd700;
+    border-radius: 10px;
+
+    background: rgba(255,255,255,.95);
 
     font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
 
-    font-weight: 700;
+    color: #002b5c;
+}
+
+.alterTimeInput:focus {
+    outline: none;
+
+    border-color: #00c853;
+
+    box-shadow:
+        0 0 10px rgba(0,200,83,.5);
+}
+
+.alterTimeButton {
+    padding: 12px 20px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #1976d2;
 
     color: white;
+
+    font-size: 1rem;
+    font-weight: bold;
 
     cursor: pointer;
 
     transition: .2s;
 }
 
-.btn:hover {
+.alterTimeButton:hover {
+    transform: translateY(-2px);
 
-    transform: scale(1.05);
+    background: #1565c0;
 }
 
-.btnAdd {
-
-    background: #16a34a;
+.alterTimeButton:active {
+    transform: scale(.98);
 }
 
-.btnRemove {
-
-    background: #dc2626;
-}
-
-.timerContainer {
-
-    margin-top: 20px;
-
-    background: rgba(255,255,255,.08);
-
-    padding: 25px;
-
-    border-radius: 20px;
-
-    text-align: center;
-
-    width: 100%;
-
-    max-width: 600px;
-}
-
-.timer {
-
-    font-size: 4rem;
-
-    font-weight: 900;
-
-    margin-bottom: 20px;
-}
-
-.timerButtons {
-
-    display: flex;
-
-    justify-content: center;
-
-    gap: 15px;
-
-    flex-wrap: wrap;
-}
-
-.btnStart {
-
-    background: #16a34a;
-}
-
-.btnStop {
-
-    background: #eab308;
-
-    color: black;
-}
-
-.btnReset {
-
-    background: #2563eb;
-}
-
-@media (max-width: 900px) {
-
-    .teamsContainer {
-
-        grid-template-columns: 1fr;
-    }
+@media (max-width: 768px) {
 
     .title {
-
         font-size: 2rem;
     }
 
     .score {
-
         font-size: 3rem;
     }
 
-    .timer {
-
-        font-size: 2.5rem;
+    .teamCard {
+        width: 100%;
     }
+
+    .buttons {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
 }

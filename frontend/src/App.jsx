@@ -22,7 +22,7 @@ function App() {
                 />
                 
                 <Route
-                    path="/controle"
+                    path="/controle/:id"
                     element={<ControlPannel />}
                 />
 

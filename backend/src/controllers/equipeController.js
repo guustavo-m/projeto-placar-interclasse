@@ -118,6 +118,41 @@ class EquipeController {
 
     }
 
+static async listarPorFiltro(
+    req,
+    res
+) {
+
+    try {
+
+        const {
+            modalidade,
+            periodo
+        } = req.query;
+
+        console.log(req.query);
+        const equipes =
+            await Equipe.listarPorFiltro(
+                modalidade,
+                periodo
+            );
+
+        return res.json(
+            equipes
+        );
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        return res.status(500).json({
+            erro:
+                "Erro ao listar equipes"
+        });
+
+    }
+
+}
 }
 
 module.exports =

@@ -328,23 +328,16 @@ static async iniciarCronometro(
     req,
     res
 ) {
-
+  console.log("INICIAR CRONÔMETRO");
     try {
 
-        const partida =
-            await Partida.listar();
+        const { id } =
+            req.params;
 
-        const partidaAtual =
-            partida[0];
+await Partida.iniciarCronometro(id);
 
-        await Partida.iniciarCronometro(
-            partidaAtual.id
-        );
-
-        const atualizada =
-            await Partida.buscarCompleta(
-                partidaAtual.id
-            );
+const atualizada =
+    await Partida.buscarCompleta(id);
 
         req.app
             .get("io")
@@ -377,20 +370,13 @@ static async pararCronometro(
 
     try {
 
-        const partida =
-            await Partida.listar();
+const { id } =
+    req.params;
 
-        const partidaAtual =
-            partida[0];
+await Partida.pararCronometro(id);
 
-        await Partida.pararCronometro(
-            partidaAtual.id
-        );
-
-        const atualizada =
-            await Partida.buscarCompleta(
-                partidaAtual.id
-            );
+const atualizada =
+    await Partida.buscarCompleta(id);
 
         req.app
             .get("io")
@@ -423,20 +409,13 @@ static async resetarCronometro(
 
     try {
 
-        const partida =
-            await Partida.listar();
+const { id } =
+    req.params;
 
-        const partidaAtual =
-            partida[0];
+await Partida.resetarCronometro(id);
 
-        await Partida.resetarCronometro(
-            partidaAtual.id
-        );
-
-        const atualizada =
-            await Partida.buscarCompleta(
-                partidaAtual.id
-            );
+const atualizada =
+    await Partida.buscarCompleta(id);
 
         req.app
             .get("io")
@@ -459,6 +438,37 @@ static async resetarCronometro(
         });
 
     }
+
+}
+
+static async alterarTempo(
+    req,
+    res
+) {
+
+    const { id } =
+        req.params;
+
+    const {
+        tempo_restante
+    } = req.body;
+
+    await Partida.alterarTempo(
+        id,
+        tempo_restante
+    );
+
+    const partida =
+        await Partida.buscarCompleta(id);
+
+    req.app
+        .get("io")
+        .emit(
+            "partidaAtualizada",
+            partida
+        );
+
+    return res.json(partida);
 
 }
 

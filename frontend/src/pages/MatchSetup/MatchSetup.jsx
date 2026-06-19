@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from './MatchSetup.module.css'
 import { teams } from "../../data/teams";
@@ -14,6 +14,9 @@ function MatchSetup() {
     const [modalidade, setModalidade] = useState("futsal");
 
     const [tempo, setTempo] = useState(10);
+
+    const [equipes, setEquipes] = useState([]);
+    const [periodo, setPeriodo] = useState("manha");
     const { id } = useParams();
 
 async function iniciarPartida() {
@@ -48,6 +51,27 @@ async function iniciarPartida() {
 
 }
 
+useEffect(() => {
+
+    async function carregarEquipes() {
+
+        const resposta =
+            await api.get(
+                `/equipes/filtro?modalidade=${modalidade}&periodo=${periodo}`
+            );
+
+            console.log(resposta.data);
+
+        setEquipes(
+            resposta.data
+        );
+
+    }
+
+    carregarEquipes();
+
+}, [modalidade, periodo]);
+
 return (
 
     <div className={styles.container}>
@@ -57,6 +81,60 @@ return (
             <h1 className={styles.title}>
                 Configurar Partida
             </h1>
+
+            <div className={styles.formGroup}>
+
+            <label className={styles.label}>
+                Período
+            </label>
+
+            <select
+                value={periodo}
+                className={styles.select}
+                onChange={(e) =>
+                    setPeriodo(e.target.value)
+                }
+            >
+                <option value="manha">
+                    Manhã
+                </option>
+
+                <option value="tarde">
+                    Tarde
+                </option>
+            </select>
+
+        </div>
+
+                    <div className={styles.formGroup}>
+
+                <label className={styles.label}>
+                    Modalidade
+                </label>
+
+                <select
+                    className={styles.select}
+                    value={modalidade}
+                    onChange={(e) =>
+                        setModalidade(e.target.value)
+                    }
+                >
+
+                    <option value="futsal">
+                        ⚽ Futsal
+                    </option>
+
+                    <option value="volei">
+                        🏐 Vôlei
+                    </option>
+
+                    <option value="handebol">
+                        🤾 Handebol
+                    </option>
+
+                </select>
+
+            </div>
 
             <div className={styles.formGroup}>
 
@@ -77,7 +155,7 @@ return (
                     </option>
 
                     {
-                        teams.map(team => (
+                        equipes.map(team => (
                             <option
                                 key={team.id}
                                 value={team.id}
@@ -110,7 +188,7 @@ return (
                     </option>
 
                     {
-                        teams.map(team => (
+                        equipes.map(team => (
                             <option
                                 key={team.id}
                                 value={team.id}
@@ -119,40 +197,6 @@ return (
                             </option>
                         ))
                     }
-
-                </select>
-
-            </div>
-
-            <div className={styles.formGroup}>
-
-                <label className={styles.label}>
-                    Modalidade
-                </label>
-
-                <select
-                    className={styles.select}
-                    value={modalidade}
-                    onChange={(e) =>
-                        setModalidade(e.target.value)
-                    }
-                >
-
-                    <option value="futsal">
-                        ⚽ Futsal
-                    </option>
-
-                    <option value="basquete">
-                        🏀 Basquete
-                    </option>
-
-                    <option value="volei">
-                        🏐 Vôlei
-                    </option>
-
-                    <option value="handebol">
-                        🤾 Handebol
-                    </option>
 
                 </select>
 
