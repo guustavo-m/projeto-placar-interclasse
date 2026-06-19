@@ -50,7 +50,7 @@
     margin-top: 25px;
 
     min-width: 260px;
-    max-width: 300px;
+    max-width: 330px;
     padding-left: 10px;
     padding-right: 10px;
     text-align: center;
@@ -106,33 +106,36 @@
 /* GOLS */
 /* ========================= */
 
-.goalsContainerA {
-    margin-top: 25px;
+.goalsContainerA,
+.goalsContainerB {
+    position: absolute;
+    top: 500px;
 
-    width: 330px;
-    margin-left: 10px;
+    width: 500px;
 
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+
+    align-content: flex-start;
     gap: 10px;
+
+    overflow: hidden;
+}
+
+.goalsContainerA {
+    left: 30px;
 }
 
 .goalsContainerB {
-    margin-top: 25px;
-    width: 330px;
-
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-right: 10px;
-    margin-left: 44%;
+    right: 30px;
 }
 
 .goalCard {
-    background: #f5f5f5;
-
-    border-radius: 18px;
     width: 420px;
+
+    background: #f5f5f5;
+    border-radius: 18px;
+
     padding: 12px 18px;
 
     display: flex;
@@ -141,12 +144,25 @@
 
     font-size: 1.8rem;
     font-weight: 700;
-
     color: black;
 }
 
-.goalCard strong {
-    font-size: 2rem;
+.goalCardCompact {
+    padding: 6px 14px;
+    font-size: 1rem;
+}
+
+.goalCardCompact strong {
+    font-size: 1rem;
+}
+
+.goalCardMini {
+    padding: 4px 10px;
+    font-size: 0.8rem;
+}
+
+.goalCardMini strong {
+    font-size: 0.8rem;
 }
 
 /* ========================= */
@@ -206,7 +222,7 @@
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: 120px;
+    top: 40px;
     left: 50%;
     transform: translateX(-50%);
 
@@ -222,6 +238,15 @@
     font-weight: 900;
 
     line-height: 1;
+}
+
+.scoreSmall {
+    font-size: 14rem !important;
+}
+
+.scoreCompact {
+    top: 80px;
+    gap: 10px;
 }
 
 /* ========================= */
@@ -281,32 +306,63 @@
 @media (max-width: 1366px) {
 
     .teamBox {
-        width: 220px;
-        height: 70px;
-        font-size: 2.3rem;
+        font-size: 2.5rem;
+        min-width: 220px;
+        max-width: 280px;
+        height: 110px;
     }
 
     .flag {
-        width: 190px;
-        height: 125px;
+        width: 290px;
+        height: 180px;
     }
 
     .scoreA,
     .scoreB {
-        font-size: 10rem;
+        font-size: 20rem;
     }
 
     .timer {
-        width: 190px;
-        height: 75px;
-        font-size: 3rem;
+        width: 210px;
+        height: 90px;
+        font-size: 4rem;
     }
 
     .logo {
         width: 180px;
     }
 
+    .goalsContainerA,
+    .goalsContainerB {
+        top: 420px;
+        width: 420px;
+    }
+
     .goalCard {
+        width: 350px;
         font-size: 1.4rem;
+        padding: 10px 14px;
+    }
+
+    .goalCard strong {
+        font-size: 1.4rem;
+    }
+
+    .goalCardCompact {
+        font-size: 0.8rem;
+        padding: 3px 8px;
+    }
+
+    .goalCardCompact strong {
+        font-size: 0.8rem;
+    }
+
+    .goalCardMini {
+        font-size: 0.5rem;
+        padding: 2px 6px;
+    }
+
+    .goalCardMini strong {
+        font-size: 0.5rem;
     }
 }

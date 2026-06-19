@@ -118,6 +118,24 @@ function FutsalScoreboard() {
         console.log(partida);
         console.log(partida.gols);
 
+        const classeGolA =
+    golsTimeA.length >= 12
+        ? styles.goalCardMini
+        : golsTimeA.length > 5
+        ? styles.goalCardCompact
+        : "";
+
+const classeGolB =
+    golsTimeB.length >= 12
+        ? styles.goalCardMini
+        : golsTimeB.length > 5
+        ? styles.goalCardCompact
+        : "";
+
+const placarGrande =
+    partida.placar_a >= 10 ||
+    partida.placar_b >= 10;
+
     return (
 
         <div className={styles.container}>
@@ -155,9 +173,8 @@ function FutsalScoreboard() {
                 </div>
 
                 <div
-                    className={
-                        styles.goalsContainerA
-                    }
+                    className={styles.goalsContainerA}
+
                 >
 
                     {
@@ -165,12 +182,11 @@ function FutsalScoreboard() {
                             gol => (
 
                                 <div
-                                    key={
-                                        gol.id
-                                    }
-                                    className={
-                                        styles.goalCard
-                                    }
+                                    key={gol.id}
+                                    className={`
+                                        ${styles.goalCard}
+                                        ${classeGolA}
+                                    `}
                                 >
 
                                     <span>
@@ -205,13 +221,30 @@ function FutsalScoreboard() {
 
 <div className={styles.score}>
 
-    <div className={styles.scoreA}>
+<div
+    className={`
+        ${styles.score}
+        ${placarGrande ? styles.scoreCompact : ""}
+    `}
+>
+    <div
+        className={`
+            ${styles.scoreA}
+            ${placarGrande ? styles.scoreSmall : ""}
+        `}
+    >
         {partida.placar_a}
     </div>
 
-    <div className={styles.scoreB}>
+    <div
+        className={`
+            ${styles.scoreB}
+            ${placarGrande ? styles.scoreSmall : ""}
+        `}
+    >
         {partida.placar_b}
     </div>
+</div>
 
 </div>
 
@@ -258,9 +291,7 @@ function FutsalScoreboard() {
                 </div>
 
                 <div
-                    className={
-                        styles.goalsContainerB
-                    }
+                    className={styles.goalsContainerB}
                 >
 
                     {
@@ -268,12 +299,11 @@ function FutsalScoreboard() {
                             gol => (
 
                                 <div
-                                    key={
-                                        gol.id
-                                    }
-                                    className={
-                                        styles.goalCard
-                                    }
+                                    key={gol.id}
+                                    className={`
+                                        ${styles.goalCard}
+                                        ${classeGolB}
+                                    `}
                                 >
 
                                     <span>
