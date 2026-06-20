@@ -133,6 +133,75 @@ ORDER BY e.nome
 
 }
 
+static async atualizar(
+    id,
+    nome,
+    cor,
+    bandeira,
+    modalidadeId,
+    periodo
+) {
+
+    const resultado =
+        await pool.query(
+            `
+            UPDATE equipes
+            SET
+                nome = $1,
+                cor = $2,
+                bandeira = $3,
+                modalidade_id = $4,
+                periodo = $5
+            WHERE id = $6
+            RETURNING *
+            `,
+            [
+                nome,
+                cor,
+                bandeira,
+                modalidadeId,
+                periodo,
+                id
+            ]
+        );
+
+    return resultado.rows[0];
+
+}
+
+static async excluir(id) {
+const possuiPartidas =
+    await pool.query(
+        `
+        SELECT id
+        FROM partidas
+        WHERE
+            equipe_a = $1
+            OR equipe_b = $1
+        LIMIT 1
+        `,
+        [id]
+    );
+    const possuiJogadores =
+    await pool.query(
+        `
+        SELECT id
+        FROM jogadores
+        WHERE equipe_id = $1
+        LIMIT 1
+        `,
+        [id]
+    );
+    await pool.query(
+        `
+        DELETE FROM equipes
+        WHERE id = $1
+        `,
+        [id]
+    );
+
+}
+
 }
 
 module.exports = Equipe;

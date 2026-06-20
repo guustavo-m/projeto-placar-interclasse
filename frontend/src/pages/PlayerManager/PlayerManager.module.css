@@ -1,0 +1,202 @@
+.container {
+    min-height: 100vh;
+
+    padding: 30px;
+
+    background: linear-gradient(
+        135deg,
+        #002b5c,
+        #004080,
+        #006847
+    );
+
+    color: white;
+}
+
+.title {
+    text-align: center;
+
+    font-size: 2.5rem;
+
+    color: #ffd700;
+
+    margin-bottom: 30px;
+}
+
+.filters {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+
+    flex-wrap: wrap;
+
+    margin-bottom: 25px;
+}
+
+.filters select {
+    width: 220px;
+
+    padding: 12px;
+
+    border: none;
+    border-radius: 12px;
+
+    font-size: 1rem;
+}
+
+.card {
+    max-width: 700px;
+
+    margin: 0 auto 30px;
+
+    padding: 25px;
+
+    background: rgba(255,255,255,.08);
+
+    backdrop-filter: blur(10px);
+
+    border-radius: 20px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 15px;
+}
+
+.card h2 {
+    color: #ffd700;
+}
+
+.card input {
+    padding: 12px;
+
+    border: none;
+
+    border-radius: 10px;
+}
+
+.card button {
+    padding: 12px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #00c853;
+
+    color: white;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.table {
+    max-width: 1200px;
+
+    margin: auto;
+
+    background: rgba(255,255,255,.08);
+
+    backdrop-filter: blur(10px);
+
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+.header,
+.row {
+    display: grid;
+
+    grid-template-columns:
+        120px
+        1fr
+        1fr
+        150px;
+
+    padding: 15px;
+
+    align-items: center;
+}
+
+.header {
+    background: rgba(255,255,255,.15);
+
+    font-weight: bold;
+}
+
+.row {
+    border-top:
+        1px solid rgba(255,255,255,.08);
+}
+
+.row button {
+    margin-right: 8px;
+
+    border: none;
+
+    background: transparent;
+
+    font-size: 1.2rem;
+
+    cursor: pointer;
+}
+
+.modalBackdrop {
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        rgba(0,0,0,.75);
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    z-index: 999;
+}
+
+.modal {
+
+    width: 500px;
+
+    background: white;
+
+    color: #002b5c;
+
+    border-radius: 20px;
+
+    padding: 25px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 15px;
+}
+
+.modal input,
+.modal select {
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+    border: 1px solid #ccc;
+}
+
+.modal button {
+
+    padding: 12px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+}

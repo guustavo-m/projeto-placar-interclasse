@@ -29,5 +29,15 @@ router.get(
     JogadorController.buscarPorEquipe
 );
 
+router.put(
+    "/:id",
+    JogadorController.atualizar
+);
+
+router.delete(
+    "/:id",
+    JogadorController.excluir
+);
+
 module.exports =
     router;

@@ -34,5 +34,15 @@ router.get(
     EquipeController.buscarPorModalidade
 );
 
+router.put(
+    "/:id",
+    EquipeController.atualizar
+);
+
+router.delete(
+    "/:id",
+    EquipeController.excluir
+);
+
 module.exports =
     router;

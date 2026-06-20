@@ -153,6 +153,77 @@ static async listarPorFiltro(
     }
 
 }
+
+static async atualizar(
+    req,
+    res
+) {
+
+    try {
+
+        const {
+            nome,
+            cor,
+            bandeira,
+            modalidade_id,
+            periodo
+        } = req.body;
+
+        const equipe =
+            await Equipe.atualizar(
+                req.params.id,
+                nome,
+                cor,
+                bandeira,
+                modalidade_id,
+                periodo
+            );
+
+        return res.json(
+            equipe
+        );
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        return res.status(500).json({
+            erro:
+                "Erro ao atualizar equipe"
+        });
+
+    }
+
+}
+
+static async excluir(
+    req,
+    res
+) {
+
+    try {
+
+        await Equipe.excluir(
+            req.params.id
+        );
+
+        return res.json({
+            mensagem:
+                "Equipe removida"
+        });
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        return res.status(500).json({
+            erro:
+                "Erro ao excluir equipe"
+        });
+
+    }
+
+}
 }
 
 module.exports =

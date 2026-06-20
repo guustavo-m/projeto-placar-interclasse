@@ -125,6 +125,73 @@ class JogadorController {
 
     }
 
+    static async atualizar(
+    req,
+    res
+) {
+
+    try {
+
+        const {
+            nome,
+            numero,
+            equipe_id
+        } = req.body;
+
+        const jogador =
+            await Jogador.atualizar(
+                req.params.id,
+                nome,
+                numero,
+                equipe_id
+            );
+
+        return res.json(
+            jogador
+        );
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        return res.status(500).json({
+            erro:
+                "Erro ao atualizar jogador"
+        });
+
+    }
+
+}
+
+static async excluir(
+    req,
+    res
+) {
+
+    try {
+
+        await Jogador.excluir(
+            req.params.id
+        );
+
+        return res.json({
+            mensagem:
+                "Jogador removido"
+        });
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        return res.status(500).json({
+            erro:
+                "Erro ao excluir jogador"
+        });
+
+    }
+
+}
+
 }
 
 module.exports =

@@ -6,6 +6,8 @@ import ScoreboardRouter from './pages/Scoreboards/ScoreboardRouter'
 import Home from "./pages/Home/Home";
 import PrivateRoute from './components/PrivateRoute/PrivateRoute'
 import Login from "./pages/Login/Login";
+import PlayerManagement from "./pages/PlayerManager/PlayerManager";
+import TeamManagement from "./pages/TeamManager/TeamManager";
 
 function App() {
 

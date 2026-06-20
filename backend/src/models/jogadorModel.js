@@ -90,6 +90,69 @@ class Jogador {
 
     }
 
+    static async atualizar(
+    id,
+    nome,
+    numero,
+    equipeId
+) {
+
+    const resultado =
+        await pool.query(
+            `
+            UPDATE jogadores
+            SET
+                nome = $1,
+                numero = $2,
+                equipe_id = $3
+            WHERE id = $4
+            RETURNING *
+            `,
+            [
+                nome,
+                numero,
+                equipeId,
+                id
+            ]
+        );
+
+    return resultado.rows[0];
+
+}
+
+
+
+static async excluir(id) {
+const possuiGols =
+    await pool.query(
+        `
+        SELECT id
+        FROM gols
+        WHERE jogador_id = $1
+        LIMIT 1
+        `,
+        [id]
+    );
+
+if (
+    possuiGols.rows.length > 0
+) {
+
+    throw new Error(
+        "Jogador possui gols registrados"
+    );
+
+}
+    await pool.query(
+        `
+        DELETE FROM jogadores
+        WHERE id = $1
+        `,
+        [id]
+    );
+
+}
+
 }
 
 module.exports = Jogador;
