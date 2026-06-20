@@ -8,16 +8,11 @@ function ControlPannel() {
     const [partida, setPartida] = useState(null);
     const [gols, setGols] = useState([]);
     const [jogadores, setJogadores] = useState([]);
-    const [modalAberto, setModalAberto] =
-        useState(false);
-    const [ladoSelecionado, setLadoSelecionado] =
-        useState(null);
-    const [jogadorSelecionado, setJogadorSelecionado] =
-        useState(null);
-        const [novoTempo, setNovoTempo] =
-    useState("");
+    const [modalAberto, setModalAberto] = useState(false);
+    const [ladoSelecionado, setLadoSelecionado] = useState(null);
+    const [jogadorSelecionado, setJogadorSelecionado] = useState(null);
+    const [novoTempo, setNovoTempo] = useState("");
     const { id } = useParams();
-    
         useEffect(() => {
         async function carregar() {
             try {
@@ -87,9 +82,7 @@ function ControlPannel() {
         setLadoSelecionado(
             lado
         );
-
         setJogadorSelecionado("");
-
         setModalAberto(
             true
         );

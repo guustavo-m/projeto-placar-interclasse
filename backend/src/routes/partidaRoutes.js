@@ -89,5 +89,15 @@ router.put(
     PartidaController.removerSet
 );
 
+router.put(
+    "/:id/ponto/add/:lado",
+    PartidaController.adicionarPonto
+);
+
+router.put(
+    "/:id/ponto/remove/:lado",
+    PartidaController.removerPonto
+);
+
 module.exports =
     router;

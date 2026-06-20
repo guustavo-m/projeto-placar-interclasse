@@ -602,6 +602,72 @@ static async removerSet(
 
 }
 
+static async adicionarPonto(
+    req,
+    res
+) {
+
+    const {
+        id,
+        lado
+    } = req.params;
+
+    await Partida.adicionarPonto(
+        id,
+        lado
+    );
+
+    const partida =
+        await Partida.buscarCompleta(
+            id
+        );
+
+    req.app
+        .get("io")
+        .emit(
+            "partidaAtualizada",
+            partida
+        );
+
+    return res.json(
+        partida
+    );
+
+}
+
+static async removerPonto(
+    req,
+    res
+) {
+
+    const {
+        id,
+        lado
+    } = req.params;
+
+    await Partida.removerPonto(
+        id,
+        lado
+    );
+
+    const partida =
+        await Partida.buscarCompleta(
+            id
+        );
+
+    req.app
+        .get("io")
+        .emit(
+            "partidaAtualizada",
+            partida
+        );
+
+    return res.json(
+        partida
+    );
+
+}
+
 }
 
 module.exports =

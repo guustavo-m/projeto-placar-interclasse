@@ -3,21 +3,26 @@
     height: 100vh;
 
     display: flex;
+    position: relative;
 
     overflow: hidden;
 
     font-family: Arial, sans-serif;
 }
 
+/* ========================= */
+/* LADOS */
+/* ========================= */
+
 .sideA,
 .sideB {
-
-    width: 40%;
+    width: 50%;
     height: 100%;
+
+    position: relative;
 
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
 .sideA {
@@ -28,24 +33,43 @@
     border-left: 6px solid black;
 }
 
-.center {
-
-    width: 20%;
-    height: 100%;
+.teamBoxContainerA {
+    align-self: flex-start;
+    margin-left: 45px;
 
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+.teamBoxContainerB {
+    align-self: flex-end;
+    margin-right: 45px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ========================= */
+/* NOME DOS TIMES */
+/* ========================= */
+
 .teamBox {
 
     margin-top: 25px;
 
-    width: 260px;
-    height: 75px;
+    min-width: 260px;
+    max-width: 330px;
 
-    background: #EFEFEF;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    text-align: center;
+
+    height: 130px;
+
+    background: #f0f0f0;
 
     border-radius: 20px;
 
@@ -55,29 +79,49 @@
 
     font-size: 3rem;
     font-weight: 900;
+
+    letter-spacing: 2px;
+
     text-transform: uppercase;
+}
+
+/* ========================= */
+/* BANDEIRAS */
+/* ========================= */
+
+.flagContainer {
+    margin-top: 30px;
 }
 
 .flag {
 
-    margin-top: 30px;
-
-    width: 320px;
-    height: 180px;
+    width: 350px;
+    height: 220px;
 
     object-fit: cover;
 
     border: 2px solid white;
 }
 
+/* ========================= */
+/* PONTOS */
+/* ========================= */
+
+.pointsContainer {
+
+    margin-top: 15px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .label {
 
-    margin-top: 25px;
+    width: 220px;
+    height: 70px;
 
-    width: 200px;
-    height: 60px;
-
-    background: white;
+    background: #efefef;
 
     border-radius: 18px;
 
@@ -85,38 +129,50 @@
     justify-content: center;
     align-items: center;
 
-    font-size: 2rem;
-    font-weight: 900;
-
     color: black;
+
+    font-size: 2.4rem;
+    font-weight: 900;
 }
 
 .points {
 
-    margin-top: 15px;
+    margin-top: -20px;
 
-    font-size: 10rem;
+    font-size: 20rem;
+
     font-weight: 900;
 
-    line-height: 1;
-
     color: white;
+
+    line-height: 1;
 }
 
-.setsBox {
+/* ========================= */
+/* SETS */
+/* ========================= */
 
-    margin-top: 25px;
+.setsTitle {
+
+    position: absolute;
+
+    top: 25px;
+    left: 50%;
+
+    transform: translateX(-50%);
 
     width: 220px;
     height: 90px;
 
-    background: white;
+    background: #efefef;
 
-    border-radius: 18px;
+    border-radius: 20px;
 
     display: flex;
     justify-content: center;
     align-items: center;
+
+    z-index: 10;
 
     font-size: 4rem;
     font-weight: 900;
@@ -126,25 +182,49 @@
 
 .setsContainer {
 
-    margin-top: 10px;
+    width: 100%;
+
+    position: absolute;
+
+    top: 40px;
+    left: 50%;
+
+    transform: translateX(-50%);
 
     display: flex;
-    gap: 80px;
+    justify-content: center;
+    align-items: center;
+
+    gap: 160px;
+
+    z-index: 10;
 }
 
-.sets {
-
-    font-size: 10rem;
-    font-weight: 900;
+.setsA,
+.setsB {
 
     color: white;
+
+    font-size: 25rem;
+    font-weight: 900;
+
+    line-height: 1;
 }
+
+/* ========================= */
+/* LOGO */
+/* ========================= */
 
 .logoContainer {
 
-    margin-top: auto;
+    position: absolute;
 
-    width: 260px;
+    bottom: 0;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 300px;
 
     background: white;
 
@@ -155,14 +235,23 @@
 
     display: flex;
     justify-content: center;
+    align-items: center;
+
+    z-index: 10;
 }
 
 .logo {
 
-    width: 220px;
+    width: 260px;
+
+    max-width: 100%;
 
     object-fit: contain;
 }
+
+/* ========================= */
+/* LOADING */
+/* ========================= */
 
 .loading {
 
@@ -174,4 +263,49 @@
     align-items: center;
 
     font-size: 2rem;
+    font-weight: bold;
+}
+
+/* ========================= */
+/* RESPONSIVO */
+/* ========================= */
+
+@media (max-width: 1366px) {
+
+    .teamBox {
+
+        font-size: 2.5rem;
+
+        min-width: 220px;
+        max-width: 280px;
+
+        height: 110px;
+    }
+
+    .flag {
+
+        width: 290px;
+        height: 180px;
+    }
+
+    .setsA,
+    .setsB {
+        font-size: 20rem;
+    }
+
+    .points {
+        font-size: 9rem;
+    }
+
+    .logo {
+        width: 180px;
+    }
+
+    .label {
+
+        width: 180px;
+        height: 60px;
+
+        font-size: 2rem;
+    }
 }

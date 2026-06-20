@@ -29,7 +29,9 @@ function VoleiScoreboard() {
 
             } catch (erro) {
 
-                console.error(erro);
+                console.error(
+                    erro
+                );
 
             }
 
@@ -104,7 +106,7 @@ function VoleiScoreboard() {
 
         <div className={styles.container}>
 
-            {/* LADO ESQUERDO */}
+            {/* ESQUERDA */}
 
             <div
                 className={styles.sideA}
@@ -114,65 +116,75 @@ function VoleiScoreboard() {
                 }}
             >
 
-                <div
-                    className={styles.teamBox}
-                    style={{
-                        color:
-                            teamA.cor
-                    }}
-                >
-                    {teamA.nome}
+                <div className={styles.teamBoxContainerA}>
+
+                    <div
+                        className={styles.teamBox}
+                        style={{
+                            color:
+                                teamA.cor
+                        }}
+                    >
+                        {teamA.nome}
+                    </div>
+
+                    <div className={styles.flagContainer}>
+
+                        <img
+                            src={teamA.bandeira}
+                            alt={teamA.nome}
+                            className={styles.flag}
+                        />
+
+                    </div>
+
                 </div>
+
+                <div className={styles.pointsContainer}>
+
+                    <div className={styles.label}>
+                        PONTOS
+                    </div>
+
+                    <div className={styles.points}>
+                        {partida.placar_a}
+                    </div>
+
+                </div>
+
+            </div>
+
+            {/* SETS */}
+
+            <div className={styles.setsTitle}>
+                SETS
+            </div>
+
+            <div className={styles.setsContainer}>
+
+                <div className={styles.setsA}>
+                    {partida.sets_a}
+                </div>
+
+                <div className={styles.setsB}>
+                    {partida.sets_b}
+                </div>
+
+            </div>
+
+            {/* LOGO */}
+
+            <div className={styles.logoContainer}>
 
                 <img
-                    src={teamA.bandeira}
-                    alt={teamA.nome}
-                    className={styles.flag}
+                    src={interclasseLogo}
+                    alt="Logo"
+                    className={styles.logo}
                 />
 
-                <div className={styles.label}>
-                    PONTOS
-                </div>
-
-                <div className={styles.points}>
-                    {partida.placar_a}
-                </div>
-
             </div>
 
-            {/* CENTRO */}
-
-            <div className={styles.center}>
-
-                <div className={styles.setsBox}>
-                    SETS
-                </div>
-
-                <div className={styles.setsContainer}>
-
-                    <div className={styles.sets}>
-                        {partida.sets_a}
-                    </div>
-
-                    <div className={styles.sets}>
-                        {partida.sets_b}
-                    </div>
-
-                </div>
-
-                <div className={styles.logoContainer}>
-
-                    <img
-                        src={interclasseLogo}
-                        alt="Logo"
-                        className={styles.logo}
-                    />
-
-                </div>
-
-            </div>
-
-            {/* LADO DIREITO */}
+            {/* DIREITA */}
 
             <div
                 className={styles.sideB}
@@ -182,28 +194,40 @@ function VoleiScoreboard() {
                 }}
             >
 
-                <div
-                    className={styles.teamBox}
-                    style={{
-                        color:
-                            teamB.cor
-                    }}
-                >
-                    {teamB.nome}
+                <div className={styles.teamBoxContainerB}>
+
+                    <div
+                        className={styles.teamBox}
+                        style={{
+                            color:
+                                teamB.cor
+                        }}
+                    >
+                        {teamB.nome}
+                    </div>
+
+                    <div className={styles.flagContainer}>
+
+                        <img
+                            src={teamB.bandeira}
+                            alt={teamB.nome}
+                            className={styles.flag}
+                        />
+
+                    </div>
+
                 </div>
 
-                <img
-                    src={teamB.bandeira}
-                    alt={teamB.nome}
-                    className={styles.flag}
-                />
+                <div className={styles.pointsContainer}>
 
-                <div className={styles.label}>
-                    PONTOS
-                </div>
+                    <div className={styles.label}>
+                        PONTOS
+                    </div>
 
-                <div className={styles.points}>
-                    {partida.placar_b}
+                    <div className={styles.points}>
+                        {partida.placar_b}
+                    </div>
+
                 </div>
 
             </div>

@@ -445,6 +445,123 @@ static async removerSet(
     );
 
 }
+
+static async adicionarPonto(
+    partidaId,
+    lado
+) {
+
+    const coluna =
+        lado === "A"
+            ? "placar_a"
+            : "placar_b";
+
+    await pool.query(
+        `
+        UPDATE partidas
+        SET ${coluna} =
+            ${coluna} + 1
+        WHERE id = $1
+        `,
+        [partidaId]
+    );
+
+    const resultado =
+        await pool.query(
+            `
+            SELECT *
+            FROM partidas
+            WHERE id = $1
+            `,
+            [partidaId]
+        );
+
+    const partida =
+        resultado.rows[0];
+
+    const pontosA =
+        partida.placar_a;
+
+    const pontosB =
+        partida.placar_b;
+
+    const venceuA =
+        pontosA >= 25 &&
+        pontosA - pontosB >= 2;
+
+    const venceuB =
+        pontosB >= 25 &&
+        pontosB - pontosA >= 2;
+
+    if (
+        venceuA ||
+        venceuB
+    ) {
+
+        const setColuna =
+            venceuA
+                ? "sets_a"
+                : "sets_b";
+
+        await pool.query(
+            `
+            UPDATE partidas
+            SET
+                ${setColuna} =
+                    ${setColuna} + 1,
+                placar_a = 0,
+                placar_b = 0
+            WHERE id = $1
+            `,
+            [partidaId]
+        );
+
+        const atualizada =
+    await pool.query(
+        `
+        SELECT *
+        FROM partidas
+        WHERE id = $1
+        `,
+        [partidaId]
+    );
+
+const dados =
+    atualizada.rows[0];
+
+    if (
+    dados.sets_a >= 3 ||
+    dados.sets_b >= 3
+) {
+
+    await pool.query(
+        `
+        UPDATE partidas
+        SET
+            finalizada = true,
+            em_andamento = false
+        WHERE id = $1
+        `,
+        [partidaId]
+    );
+
+}
+    }
+
+}
+
+static async removerPonto(
+    partidaId,
+    lado
+) {
+
+    return this.removerGol(
+        partidaId,
+        lado
+    );
+
+}
+
 }
 
 module.exports = Partida;

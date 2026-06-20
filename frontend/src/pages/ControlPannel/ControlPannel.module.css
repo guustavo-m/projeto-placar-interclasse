@@ -300,6 +300,19 @@
     transform: scale(.98);
 }
 
+.finalizada {
+
+    text-align: center;
+
+    font-size: 1.5rem;
+
+    font-weight: bold;
+
+    color: #ffeb3b;
+
+    margin-bottom: 20px;
+}
+
 @media (max-width: 768px) {
 
     .title {

@@ -1,52 +1,375 @@
 .container {
-
-    width: 100vw;
     min-height: 100vh;
+    background: linear-gradient(
+        135deg,
+        #002b5c,
+        #004080,
+        #006847
+    );
 
+    padding: 30px;
+    color: white;
+}
+
+.title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #ffd700;
+}
+
+.score {
+    text-align: center;
+    font-size: 4rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: white;
+    text-shadow: 0 0 15px rgba(255,255,255,.4);
+}
+
+.teamsContainer {
     display: flex;
+    gap: 25px;
     justify-content: center;
-    gap: 60px;
-
-    padding: 40px;
-
-    background: #f5f5f5;
+    flex-wrap: wrap;
 }
 
 .teamCard {
+    background: rgba(255,255,255,.08);
+    backdrop-filter: blur(10px);
 
-    width: 400px;
-
-    background: white;
-
+    border: 2px solid rgba(255,255,255,.15);
     border-radius: 20px;
 
-    padding: 30px;
+    width: 450px;
+    padding: 25px;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.3);
+}
+
+.teamName {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #ffd700;
+    margin-bottom: 20px;
+}
+
+.section {
+    margin-top: 20px;
+}
+
+.sectionTitle {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 12px;
+    color: white;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    border: none;
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btnAdd {
+    background: #00c853;
+    color: white;
+}
+
+.btnRemove {
+    background: #d50000;
+    color: white;
+}
+
+.goalList {
+    margin-top: 20px;
+    background: rgba(255,255,255,.05);
+    border-radius: 12px;
+    padding: 15px;
+}
+
+.goalList h3 {
+    color: #ffd700;
+    margin-bottom: 10px;
+}
+
+.goalList div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 8px;
+    padding: 8px;
+
+    background: rgba(255,255,255,.05);
+    border-radius: 8px;
+}
+
+.goalList button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.modalBackdrop {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0,0,0,.75);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 999;
+}
+
+.modal {
+    background: white;
+    color: #002b5c;
+
+    padding: 25px;
+    border-radius: 20px;
+
+    min-width: 350px;
 
     display: flex;
     flex-direction: column;
     gap: 15px;
-
-    box-shadow:
-        0 0 15px
-        rgba(0,0,0,.1);
 }
 
-.score {
+.modal h2 {
+    text-align: center;
+}
 
-    font-size: 1.5rem;
+.modal select,
+.modal input {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.modal button {
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
     font-weight: bold;
 }
 
-button {
+.modal button:first-of-type {
+    background: #00c853;
+    color: white;
+}
 
-    height: 60px;
+.modal button:last-of-type {
+    background: #d50000;
+    color: white;
+}
+
+.timeControls {
+    margin-top: 25px;
+
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.timeControls button {
+    border: none;
+    border-radius: 10px;
+
+    padding: 10px 16px;
+
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.timeControls button:nth-child(1) {
+    background: #00c853;
+    color: white;
+}
+
+.timeControls button:nth-child(2) {
+    background: #ff9800;
+    color: white;
+}
+
+.timeControls button:nth-child(3) {
+    background: #d50000;
+    color: white;
+}
+
+.timeControls button:nth-child(4) {
+    background: #1976d2;
+    color: white;
+}
+
+.timeControls input {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    width: 100px;
+    text-align: center;
+}
+
+.timeEditor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.timeContainer {
+    display: flex;
+    gap: 150px;
+}
+
+.alterTimeInput {
+    width: 120px;
+
+    padding: 12px;
+
+    border: 2px solid #ffd700;
+    border-radius: 10px;
+
+    background: rgba(255,255,255,.95);
+
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+
+    color: #002b5c;
+}
+
+.alterTimeInput:focus {
+    outline: none;
+
+    border-color: #00c853;
+
+    box-shadow:
+        0 0 10px rgba(0,200,83,.5);
+}
+
+.alterTimeButton {
+    padding: 12px 20px;
 
     border: none;
+    border-radius: 10px;
 
-    border-radius: 12px;
+    background: #1976d2;
 
-    font-size: 1.1rem;
+    color: white;
+
+    font-size: 1rem;
     font-weight: bold;
 
     cursor: pointer;
+
+    transition: .2s;
+}
+
+.alterTimeButton:hover {
+    transform: translateY(-2px);
+
+    background: #1565c0;
+}
+
+.alterTimeButton:active {
+    transform: scale(.98);
+}
+
+.scoreBoard {
+
+    text-align: center;
+
+    margin-bottom: 30px;
+}
+
+.sets {
+
+    font-size: 2rem;
+    font-weight: bold;
+
+    color: #ffd700;
+
+    margin-bottom: 10px;
+}
+
+.info {
+
+    font-size: 1.4rem;
+
+    margin-bottom: 12px;
+
+    text-align: center;
+}
+
+.btnSet {
+
+    background: #ff9800;
+
+    color: white;
+}
+
+.finalizada {
+
+    text-align: center;
+
+    font-size: 1.5rem;
+
+    font-weight: bold;
+
+    color: #ffeb3b;
+
+    margin-bottom: 20px;
+}
+
+.btnFinish {
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .score {
+        font-size: 3rem;
+    }
+
+    .teamCard {
+        width: 100%;
+    }
+
+    .buttons {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
 }

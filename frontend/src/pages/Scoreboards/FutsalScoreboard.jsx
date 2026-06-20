@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-
+import { useParams } from "react-router-dom";
 import api from "../../services/api";
 import socket from "../../services/socket";
 import styles from "./FutsalScoreboard.module.css";
 import interclasseLogo from "../../../public/logo_copa.png";
 
+
 function FutsalScoreboard() {
 
-    const [partida, setPartida] =
-        useState(null);
+    const [partida, setPartida] = useState(null);
+    const { id } = useParams();
 
     useEffect(() => {
 
@@ -18,7 +19,7 @@ function FutsalScoreboard() {
 
                 const resposta =
                     await api.get(
-                        "/partidas/atual"
+                        `/partidas/${id}`
                     );
 
                 setPartida(
@@ -118,7 +119,7 @@ function FutsalScoreboard() {
         console.log(partida);
         console.log(partida.gols);
 
-        const classeGolA =
+const classeGolA =
     golsTimeA.length >= 12
         ? styles.goalCardMini
         : golsTimeA.length > 5
