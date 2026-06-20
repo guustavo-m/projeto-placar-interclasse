@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-
 import api from "../../services/api";
 import socket from "../../services/socket";
-
 import styles from "./VoleiScoreboard.module.css";
-
+import BackButton from '../../components/BackButton/BackButton'
 import interclasseLogo from "../../../public/logo_copa.png";
 
 function VoleiScoreboard() {
@@ -107,7 +105,7 @@ function VoleiScoreboard() {
         <div className={styles.container}>
 
             {/* ESQUERDA */}
-
+            <BackButton/>
             <div
                 className={styles.sideA}
                 style={{

@@ -4,7 +4,7 @@ import api from "../../services/api";
 import socket from "../../services/socket";
 import styles from "./FutsalScoreboard.module.css";
 import interclasseLogo from "../../../public/logo_copa.png";
-
+import BackButton from '../../components/BackButton/BackButton'
 
 function FutsalScoreboard() {
 
@@ -142,7 +142,7 @@ const placarGrande =
         <div className={styles.container}>
 
             {/* LADO ESQUERDO */}
-
+            <BackButton/>
             <div
                 className={styles.sideA}
                 style={{

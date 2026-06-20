@@ -1,0 +1,44 @@
+.exitButton {
+
+    position: fixed;
+
+    right: 25px;
+    bottom: 25px;
+
+    z-index: 9999;
+
+    border: none;
+
+    padding: 14px 22px;
+
+    border-radius: 12px;
+
+    background: #d50000;
+
+    color: white;
+
+    font-size: 1rem;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 6px 15px
+        rgba(0,0,0,.3);
+
+    transition: .2s;
+}
+
+.exitButton:hover {
+
+    transform: translateY(-2px);
+
+    background: #b71c1c;
+
+}
+
+.exitButton:active {
+
+    transform: scale(.97);
+
+}

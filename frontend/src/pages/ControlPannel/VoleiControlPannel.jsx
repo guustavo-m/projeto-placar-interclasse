@@ -3,7 +3,8 @@ import { useParams } from "react-router-dom";
 
 import api from "../../services/api";
 import socket from "../../services/socket";
-
+import ExitButton from "../../components/ExitButton/ExitButton";
+import BackButton from '../../components/BackButton/BackButton'
 import styles from "./VoleiControlPannel.module.css";
 
 function VoleiControlPannel() {
@@ -153,7 +154,7 @@ function VoleiControlPannel() {
     return (
 
         <div className={styles.container}>
-
+            <BackButton/>
             <h1 className={styles.title}>
                 Painel de Controle - Vôlei
             </h1>
@@ -339,7 +340,7 @@ function VoleiControlPannel() {
                     </div>
 
                 </div>
-
+            <ExitButton/>
             </div>
 
     );

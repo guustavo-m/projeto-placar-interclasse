@@ -1,0 +1,45 @@
+.backButton {
+
+    position: fixed;
+
+    top: 25px;
+    left: 25px;
+
+    width: 40px;
+    height: 40px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #ffffff00;
+
+    color: white;
+
+    font-size: 1.5rem;
+
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 9999;
+
+    transition: .2s;
+}
+
+.backButton:hover {
+
+    transform: translateY(-2px);
+
+    background: #f1f8ff;
+
+    color: black;
+
+}
+
+.backButton:active {
+
+    transform: scale(.95);
+
+}

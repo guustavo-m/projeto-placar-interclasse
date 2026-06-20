@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./Home.module.css";
 import api from "../../services/api";
+import ExitButton from "../../components/ExitButton/ExitButton";
 
 function Home() {
 
@@ -50,7 +51,7 @@ function Home() {
                 </button>
 
             </div>
-
+            <ExitButton/>
         </div>
 
     );

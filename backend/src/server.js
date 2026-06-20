@@ -25,6 +25,12 @@ const partidaRoutes =
 const golRoutes =
     require("./routes/golRoutes");
 
+const authRoutes = 
+    require("./routes/authRoutes")
+
+const verificarToken =
+    require("../src/middleware/authMiddleware");
+
 const app = express();
 
 const server =
@@ -46,27 +52,37 @@ app.use(cors());
 app.use(express.json());
 
 app.use(
+    "/auth",
+    authRoutes
+);
+
+app.use(
     "/modalidades",
+    verificarToken,
     modalidadeRoutes
 );
 
 app.use(
     "/equipes",
+    verificarToken,
     equipeRoutes
 );
 
 app.use(
     "/jogadores",
+    verificarToken,
     jogadorRoutes
 );
 
 app.use(
     "/partidas",
+    verificarToken,
     partidaRoutes
 );
 
 app.use(
     "/gols",
+    verificarToken,
     golRoutes
 );
 

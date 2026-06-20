@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import api from "../../services/api";
 import socket from "../../services/socket";
 import styles from "./ControlPannel.module.css";
+import ExitButton from "../../components/ExitButton/ExitButton";
+import BackButton from '../../components/BackButton/BackButton'
 
 function ControlPannel() {
     const [partida, setPartida] = useState(null);
@@ -248,6 +250,7 @@ async function retomarPartida() {
     return (
 
         <div className={styles.container}>
+            <BackButton/>
 
             <h1 className={styles.title}>
                 Painel de Controle
@@ -487,6 +490,7 @@ async function retomarPartida() {
 
                 </div>
             </div>
+            <ExitButton/>
             </div>
 
             {

@@ -1,9 +1,11 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import MatchSetup from "./pages/MatchSetup/MatchSetup";
 import ControlRouter from './pages/Scoreboards/ControlRouter'
 import ScoreboardRouter from './pages/Scoreboards/ScoreboardRouter'
 import Home from "./pages/Home/Home";
+import PrivateRoute from './components/PrivateRoute/PrivateRoute'
+import Login from "./pages/Login/Login";
 
 function App() {
 
@@ -13,22 +15,48 @@ function App() {
             <Routes>
                 <Route
                     path="/"
-                    element={<Home />}
+                    element={<Navigate to="/login" />}
+                />
+
+                <Route
+                    path="/login"
+                    element={<Login />}
+                />
+
+                <Route
+                    path="/home"
+                    element={
+                        <PrivateRoute>
+                            <Home />
+                        </PrivateRoute>
+                    }
                 />
 
                 <Route
                     path="/configurar"
-                    element={<MatchSetup />}
+                    element={
+                        <PrivateRoute>
+                            <MatchSetup />
+                        </PrivateRoute>
+                    }
                 />
 
                 <Route
                     path="/placar/:id"
-                    element={<ScoreboardRouter />}
+                    element={
+                        <PrivateRoute>
+                            <ScoreboardRouter />
+                        </PrivateRoute>
+                    }
                 />
 
                 <Route
                     path="/controle/:id"
-                    element={<ControlRouter />}
+                    element={
+                        <PrivateRoute>
+                            <ControlRouter />
+                        </PrivateRoute>
+                    }
                 />
 
             </Routes>

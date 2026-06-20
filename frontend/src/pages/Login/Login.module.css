@@ -1,0 +1,137 @@
+.container {
+
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: linear-gradient(
+        135deg,
+        #002b5c,
+        #004080,
+        #006847
+    );
+}
+
+.card {
+
+    width: 90%;
+    max-width: 450px;
+
+    padding: 40px;
+
+    border-radius: 25px;
+
+    background: rgba(255,255,255,.08);
+
+    backdrop-filter: blur(10px);
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.35);
+
+    text-align: center;
+}
+
+.title {
+
+    color: #ffd700;
+
+    font-size: 2.5rem;
+
+    margin-bottom: 10px;
+}
+
+.subtitle {
+
+    color: white;
+
+    margin-bottom: 30px;
+
+    font-size: 1rem;
+}
+
+.form {
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 15px;
+}
+
+.input {
+
+    width: 100%;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    font-size: 1rem;
+
+    background: rgba(255,255,255,.95);
+
+    color: #002b5c;
+
+    box-sizing: border-box;
+}
+
+.input:focus {
+
+    outline: none;
+
+    box-shadow:
+        0 0 10px rgba(255,215,0,.5);
+}
+
+.button {
+
+    width: 100%;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #00c853;
+
+    color: white;
+
+    font-size: 1.1rem;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.button:hover {
+
+    transform: translateY(-2px);
+
+    background: #00a844;
+}
+
+.button:active {
+
+    transform: scale(.98);
+}
+
+.error {
+
+    color: #ff5252;
+
+    font-weight: bold;
+
+    margin-top: 10px;
+}
+
+.logo {
+
+    width: 140px;
+
+    margin-bottom: 20px;
+}

@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from './MatchSetup.module.css'
-import { teams } from "../../data/teams";
 import api from "../../services/api";
+import ExitButton from "../../components/ExitButton/ExitButton";
+import BackButton from '../../components/BackButton/BackButton'
 
 function MatchSetup() {
 
@@ -89,7 +90,7 @@ useEffect(() => {
 return (
 
     <div className={styles.container}>
-
+        <BackButton/>
         <div className={styles.card}>
 
             <h1 className={styles.title}>
@@ -234,7 +235,7 @@ return (
             </button>
 
         </div>
-
+        <ExitButton/>
     </div>
 
 );
