@@ -189,6 +189,17 @@ setInterval(
     1000
 );
 
+console.log(
+    "NODE_ENV:",
+    process.env.NODE_ENV
+);
+
+console.log(
+    "DATABASE_URL existe?",
+    !!process.env.DATABASE_URL
+);
+
+
 server.listen(
     process.env.PORT,
     () => {
