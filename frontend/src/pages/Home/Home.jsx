@@ -50,6 +50,24 @@ function Home() {
                     🎮 Painel de Controle
                 </button>
 
+                <button
+                    className={styles.button}
+                    onClick={() =>
+                        navigate("/jogadores")
+                    }
+                >
+                    👥 Gerenciar Jogadores
+                </button>
+
+                <button
+                    className={styles.button}
+                    onClick={() =>
+                        navigate("/equipes")
+                    }
+                >
+                    🏳️ Gerenciar Equipes
+                </button>
+
             </div>
             <ExitButton/>
         </div>

@@ -61,6 +61,24 @@ function App() {
                     }
                 />
 
+                <Route
+                    path="/jogadores"
+                    element={
+                        <PrivateRoute>
+                            <PlayerManagement />
+                        </PrivateRoute>
+                    }
+                />
+
+                <Route
+                    path="/equipes"
+                    element={
+                        <PrivateRoute>
+                            <TeamManagement />
+                        </PrivateRoute>
+                    }
+                />
+
             </Routes>
 
         </BrowserRouter>

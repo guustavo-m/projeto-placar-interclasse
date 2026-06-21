@@ -11,7 +11,8 @@ class EquipeController {
                 nome,
                 cor,
                 bandeira,
-                modalidade_id
+                modalidade_id,
+                periodo
             } = req.body;
 
             const equipe =
@@ -19,7 +20,8 @@ class EquipeController {
                     nome,
                     cor,
                     bandeira,
-                    modalidade_id
+                    modalidade_id,
+                    periodo
                 );
 
             return res

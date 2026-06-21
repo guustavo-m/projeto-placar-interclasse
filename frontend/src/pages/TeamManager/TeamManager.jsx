@@ -50,124 +50,202 @@ function TeamManager() {
 
     async function carregarModalidades() {
 
-        const resposta =
-            await api.get(
-                "/modalidades"
+        try {
+
+            const resposta =
+                await api.get(
+                    "/modalidades"
+                );
+
+            setModalidades(
+                resposta.data
             );
 
-        setModalidades(
-            resposta.data
-        );
+        } catch (erro) {
 
-    }
+            console.error(erro);
 
-    function abrirEdicao(equipe) {
-
-    setEquipeEditando(
-        equipe
-    );
-
-    setNome(
-        equipe.nome
-    );
-
-    setCor(
-        equipe.cor
-    );
-
-    setBandeira(
-        equipe.bandeira
-    );
-
-    setModalEdicao(
-        true
-    );
-
-}
-
-async function salvarEdicao() {
-
-    await api.put(
-        `/equipes/${equipeEditando.id}`,
-        {
-            nome,
-            cor,
-            bandeira,
-            modalidade_id:
-                modalidade,
-            periodo
         }
-    );
-
-    carregarEquipes();
-
-    setModalEdicao(
-        false
-    );
-
-}
-
-async function excluirEquipe(id) {
-
-    const confirmar =
-        window.confirm(
-            "Deseja excluir esta equipe?"
-        );
-
-    if (!confirmar)
-        return;
-
-    try {
-
-        await api.delete(
-            `/equipes/${id}`
-        );
-
-        carregarEquipes();
-
-    } catch {
-
-        alert(
-            "Equipe possui vínculos e não pode ser removida."
-        );
 
     }
-
-}
 
     async function carregarEquipes() {
 
         if (
             !modalidade ||
             !periodo
-        ) return;
+        ) {
 
-        const resposta =
-            await api.get(
-                `/equipes/filtro?modalidade=${modalidade}&periodo=${periodo}`
+            setEquipes([]);
+
+            return;
+
+        }
+
+        try {
+
+            const resposta =
+                await api.get(
+                    `/equipes/filtro?modalidade=${modalidade}&periodo=${periodo}`
+                );
+
+            setEquipes(
+                resposta.data
             );
 
-        setEquipes(
-            resposta.data
-        );
+        } catch (erro) {
+
+            console.error(erro);
+
+        }
+
+    }
+
+    function limparFormulario() {
+
+        setNome("");
+        setCor("#004080");
+        setBandeira("");
 
     }
 
     async function adicionarEquipe() {
 
-        await api.post(
-            "/equipes",
-            {
-                nome,
-                cor,
-                bandeira,
-                modalidade_id:
-                    modalidade,
-                periodo
-            }
+        if (
+            !nome ||
+            !modalidade ||
+            !periodo
+        ) {
+
+            alert(
+                "Preencha nome, modalidade e período."
+            );
+
+            return;
+
+        }
+
+        try {
+
+            await api.post(
+                "/equipes",
+                {
+                    nome,
+                    cor,
+                    bandeira,
+                    modalidade_id:
+                        modalidade,
+                    periodo
+                }
+            );
+
+            limparFormulario();
+
+            carregarEquipes();
+
+        } catch (erro) {
+
+            console.error(erro);
+
+            alert(
+                "Erro ao adicionar equipe."
+            );
+
+        }
+
+    }
+
+    function abrirEdicao(equipe) {
+
+        setEquipeEditando(
+            equipe
         );
 
-        carregarEquipes();
+        setNome(
+            equipe.nome
+        );
+
+        setCor(
+            equipe.cor
+        );
+
+        setBandeira(
+            equipe.bandeira
+        );
+
+        setModalEdicao(
+            true
+        );
+
+    }
+
+    async function salvarEdicao() {
+
+        try {
+
+            await api.put(
+                `/equipes/${equipeEditando.id}`,
+                {
+                    nome,
+                    cor,
+                    bandeira,
+                    modalidade_id:
+                        modalidade,
+                    periodo
+                }
+            );
+
+            setModalEdicao(
+                false
+            );
+
+            setEquipeEditando(
+                null
+            );
+
+            limparFormulario();
+
+            carregarEquipes();
+
+        } catch (erro) {
+
+            console.error(erro);
+
+            alert(
+                "Erro ao atualizar equipe."
+            );
+
+        }
+
+    }
+
+    async function excluirEquipe(id) {
+
+        const confirmar =
+            window.confirm(
+                "Deseja realmente excluir esta equipe?"
+            );
+
+        if (!confirmar)
+            return;
+
+        try {
+
+            await api.delete(
+                `/equipes/${id}`
+            );
+
+            carregarEquipes();
+
+        } catch (erro) {
+
+            console.error(erro);
+
+            alert(
+                "Não foi possível excluir a equipe."
+            );
+
+        }
 
     }
 
@@ -203,6 +281,7 @@ async function excluirEquipe(id) {
                     <option value="tarde">
                         Tarde
                     </option>
+
                 </select>
 
                 <select
@@ -220,6 +299,7 @@ async function excluirEquipe(id) {
                     {
                         modalidades.map(
                             modalidade => (
+
                                 <option
                                     key={
                                         modalidade.id
@@ -229,12 +309,14 @@ async function excluirEquipe(id) {
                                     }
                                 >
                                     {
-                                        modalidade.nome
+                                        modalidade.label
                                     }
                                 </option>
+
                             )
                         )
                     }
+
                 </select>
 
             </div>
@@ -246,7 +328,7 @@ async function excluirEquipe(id) {
                 </h2>
 
                 <input
-                    placeholder="Nome"
+                    placeholder="Nome da equipe"
                     value={nome}
                     onChange={e =>
                         setNome(
@@ -256,7 +338,7 @@ async function excluirEquipe(id) {
                 />
 
                 <input
-                    placeholder="Bandeira"
+                    placeholder="Caminho da bandeira"
                     value={bandeira}
                     onChange={e =>
                         setBandeira(
@@ -287,6 +369,26 @@ async function excluirEquipe(id) {
 
             <div className={styles.table}>
 
+                <div className={styles.header}>
+
+                    <span>
+                        Equipe
+                    </span>
+
+                    <span>
+                        Modalidade
+                    </span>
+
+                    <span>
+                        Período
+                    </span>
+
+                    <span>
+                        Ações
+                    </span>
+
+                </div>
+
                 {
                     equipes.map(
                         equipe => (
@@ -299,9 +401,19 @@ async function excluirEquipe(id) {
                             >
 
                                 <span>
+                                    {equipe.nome}
+                                </span>
+
+                                <span>
+
                                     {
-                                        equipe.nome
+                                        modalidades.find(
+                                            m =>
+                                                m.id ===
+                                                equipe.modalidade_id
+                                        )?.nome
                                     }
+
                                 </span>
 
                                 <span>
@@ -312,25 +424,25 @@ async function excluirEquipe(id) {
 
                                 <span>
 
-                                <button
-                                    onClick={() =>
-                                        abrirEdicao(
-                                            equipe
-                                        )
-                                    }
-                                >
-                                    ✏️
-                                </button>
+                                    <button
+                                        onClick={() =>
+                                            abrirEdicao(
+                                                equipe
+                                            )
+                                        }
+                                    >
+                                        ✏️
+                                    </button>
 
-                                <button
-                                    onClick={() =>
-                                        excluirEquipe(
-                                            equipe.id
-                                        )
-                                    }
-                                >
-                                    🗑️
-                                </button>
+                                    <button
+                                        onClick={() =>
+                                            excluirEquipe(
+                                                equipe.id
+                                            )
+                                        }
+                                    >
+                                        🗑️
+                                    </button>
 
                                 </span>
 
@@ -341,6 +453,70 @@ async function excluirEquipe(id) {
                 }
 
             </div>
+
+            {
+                modalEdicao && (
+
+                    <div className={styles.modalBackdrop}>
+
+                        <div className={styles.modal}>
+
+                            <h2>
+                                Editar Equipe
+                            </h2>
+
+                            <input
+                                value={nome}
+                                onChange={e =>
+                                    setNome(
+                                        e.target.value
+                                    )
+                                }
+                            />
+
+                            <input
+                                value={bandeira}
+                                onChange={e =>
+                                    setBandeira(
+                                        e.target.value
+                                    )
+                                }
+                            />
+
+                            <input
+                                type="color"
+                                value={cor}
+                                onChange={e =>
+                                    setCor(
+                                        e.target.value
+                                    )
+                                }
+                            />
+
+                            <div className={styles.modalActions}>
+
+                                <button onClick={salvarEdicao}>
+                                    💾 Salvar
+                                </button>
+
+                                <button
+                                    onClick={() => {
+                                        setModalEdicao(false);
+                                        setEquipeEditando(null);
+                                        limparFormulario();
+                                    }}
+                                >
+                                    ❌ Cancelar
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                )
+            }
 
         </div>
 

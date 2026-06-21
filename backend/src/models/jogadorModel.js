@@ -36,24 +36,38 @@ class Jogador {
 
     }
 
-    static async listar() {
+static async listar() {
 
-        const resultado =
-            await pool.query(
-                `
-                SELECT
-                    j.*,
-                    e.nome AS equipe
-                FROM jogadores j
-                INNER JOIN equipes e
-                    ON e.id = j.equipe_id
-                ORDER BY j.nome
-                `
-            );
+    const resultado =
+        await pool.query(
+            `
+            SELECT
+                j.id,
+                j.nome,
+                j.numero,
+                j.equipe_id,
 
-        return resultado.rows;
+                e.nome AS equipe,
+                e.periodo,
 
-    }
+                m.id AS modalidade_id,
+                m.nome AS modalidade
+
+            FROM jogadores j
+
+            INNER JOIN equipes e
+                ON e.id = j.equipe_id
+
+            INNER JOIN modalidades m
+                ON m.id = e.modalidade_id
+
+            ORDER BY j.nome
+            `
+        );
+
+    return resultado.rows;
+
+}
 
     static async buscarPorId(id) {
 

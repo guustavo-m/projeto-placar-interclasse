@@ -86,6 +86,8 @@ function PlayerManager() {
 
     }
 
+    
+
     useEffect(() => {
 
         carregarEquipes();
@@ -200,18 +202,44 @@ async function excluirJogador(id) {
 
         setNome("");
         setNumero("");
-
+        setEquipeSelecionada("");
         carregarJogadores();
 
     }
 
     const jogadoresFiltrados =
-        jogadores.filter(
-            jogador =>
-                !equipeSelecionada ||
-                jogador.equipe ===
-                    equipeSelecionada
+    jogadores.filter(jogador => {
+
+        const filtroPeriodo =
+            !periodo ||
+            jogador.periodo ===
+                periodo;
+
+        const filtroModalidade =
+            !modalidade ||
+            jogador.modalidade_id ===
+                Number(modalidade);
+
+        const filtroEquipe =
+            !equipeSelecionada ||
+            jogador.equipe ===
+                equipeSelecionada;
+
+        return (
+            filtroPeriodo &&
+            filtroModalidade &&
+            filtroEquipe
         );
+
+    });
+
+    useEffect(() => {
+
+    setEquipeSelecionada("");
+
+    carregarEquipes();
+
+}, [modalidade, periodo]);
 
     return (
 
@@ -271,7 +299,7 @@ async function excluirJogador(id) {
                                     }
                                 >
                                     {
-                                        modalidade.nome
+                                        modalidade.label
                                     }
                                 </option>
                             )

@@ -2,28 +2,32 @@ const pool = require("../config/db");
 
 class Equipe {
 
-    static async criar(
-        nome,
-        cor,
-        bandeira,
-        modalidadeId
-    ) {
+static async criar(
+    nome,
+    cor,
+    bandeira,
+    modalidadeId,
+    periodo
+) {
 
-        const resultado = await pool.query(
+    const resultado =
+        await pool.query(
             `
             INSERT INTO equipes
             (
                 nome,
                 cor,
                 bandeira,
-                modalidade_id
+                modalidade_id,
+                periodo
             )
             VALUES
             (
                 $1,
                 $2,
                 $3,
-                $4
+                $4,
+                $5
             )
             RETURNING *
             `,
@@ -31,13 +35,14 @@ class Equipe {
                 nome,
                 cor,
                 bandeira,
-                modalidadeId
+                modalidadeId,
+                periodo
             ]
         );
 
-        return resultado.rows[0];
+    return resultado.rows[0];
 
-    }
+}
 
     static async listar() {
 
@@ -192,6 +197,26 @@ const possuiPartidas =
         `,
         [id]
     );
+
+    if (
+    possuiPartidas.rows.length > 0
+) {
+
+    throw new Error(
+        "Equipe possui partidas"
+    );
+
+}
+
+if (
+    possuiJogadores.rows.length > 0
+) {
+
+    throw new Error(
+        "Equipe possui jogadores"
+    );
+
+}
     await pool.query(
         `
         DELETE FROM equipes
