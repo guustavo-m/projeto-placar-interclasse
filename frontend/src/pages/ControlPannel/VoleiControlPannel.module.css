@@ -350,6 +350,318 @@
     margin-top: 20px;
 }
 
+.modalBackdrop {
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        rgba(
+            0,
+            0,
+            0,
+            0.75
+        );
+
+    backdrop-filter:
+        blur(5px);
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    z-index: 9999;
+
+    animation:
+        fadeIn .2s ease;
+
+}
+
+.modal {
+
+    width: 450px;
+
+    max-width: 90vw;
+
+    max-height: 80vh;
+
+    overflow-y: auto;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #f7f7f7
+        );
+
+    border-radius: 20px;
+
+    padding: 25px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+    box-shadow:
+        0 15px 40px
+        rgba(
+            0,
+            0,
+            0,
+            0.35
+        );
+
+    animation:
+        modalOpen .25s ease;
+
+}
+
+.modal h2 {
+
+    margin: 0 0 10px;
+
+    text-align: center;
+
+    color: #002b5c;
+
+    font-size: 1.5rem;
+
+    font-weight: 700;
+
+}
+
+.modal button {
+
+    border: none;
+
+    border-radius: 12px;
+
+    padding: 12px;
+
+    font-size: 1rem;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: .2s;
+
+}
+
+.modal button:hover {
+
+    transform:
+        translateY(-2px);
+
+}
+
+.modal button:not(.pointItem) {
+
+    background: #004080;
+
+    color: white;
+
+}
+
+.modal button:last-child {
+
+    background: #d32f2f;
+
+    color: white;
+
+    margin-top: 10px;
+
+}
+
+.pointItem {
+
+    width: 100%;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #f5f5f5;
+
+    color: #222;
+
+    font-size: 1rem;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: .2s;
+
+}
+
+.pointItem:hover {
+
+    background: #ffe5e5;
+
+    transform:
+        translateY(-2px);
+
+}
+
+.pointItem span:last-child {
+
+    font-size: 1.2rem;
+
+}
+
+.modal::-webkit-scrollbar {
+
+    width: 8px;
+
+}
+
+.modal::-webkit-scrollbar-track {
+
+    background: transparent;
+
+}
+
+.modal::-webkit-scrollbar-thumb {
+
+    background: #bdbdbd;
+
+    border-radius: 10px;
+
+}
+
+.rankingBox {
+
+    margin-top: 20px;
+    margin-bottom: 30px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.08
+        );
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+}
+
+.rankingBox h3 {
+
+    margin: 0;
+
+    padding: 12px;
+
+    text-align: center;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.12
+        );
+
+    color: #ffd700;
+
+    font-size: 1rem;
+
+}
+
+.rankingHeader {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 10px 15px;
+
+    font-weight: bold;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.08
+        );
+
+    border-bottom:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.1
+        );
+
+}
+
+.rankingRow {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 10px 15px;
+
+    border-bottom:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.05
+        );
+
+    transition: .2s;
+
+}
+
+.rankingRow:hover {
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.05
+        );
+
+}
+
+.rankingRow:last-child {
+
+    border-bottom: none;
+
+}
+
+.rankingRow span:last-child {
+
+    font-weight: bold;
+
+    color: #ffd700;
+
+}
+
 @media (max-width: 768px) {
 
     .title {

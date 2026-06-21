@@ -9,8 +9,12 @@ const ModalidadeController =
         "../controllers/modalidadeController"
     );
 
+const verificarToken =
+    require("../../src/middleware/authMiddleware");
+
 router.get(
     "/",
+    verificarToken,
     ModalidadeController.listar
 );
 

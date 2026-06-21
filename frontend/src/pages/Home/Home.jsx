@@ -20,6 +20,11 @@ function Home() {
 
 }
 
+const tipo =
+    localStorage.getItem(
+        "tipo"
+    );
+
     return (
 
         <div className={styles.container}>
@@ -49,25 +54,38 @@ function Home() {
                 >
                     🎮 Painel de Controle
                 </button>
+                {
+                    tipo === "admin" && (
+                        <>
+                                <button
+                                    className={styles.button}
+                                    onClick={() =>
+                                        navigate("/jogadores")
+                                    }
+                                >
+                                    👥 Gerenciar Jogadores
+                                </button>
 
-                <button
-                    className={styles.button}
-                    onClick={() =>
-                        navigate("/jogadores")
-                    }
-                >
-                    👥 Gerenciar Jogadores
-                </button>
+                                <button
+                                    className={styles.button}
+                                    onClick={() =>
+                                        navigate("/equipes")
+                                    }
+                                >
+                                    🏳️ Gerenciar Equipes
+                                </button>
 
-                <button
-                    className={styles.button}
-                    onClick={() =>
-                        navigate("/equipes")
-                    }
-                >
-                    🏳️ Gerenciar Equipes
-                </button>
-
+                                <button
+                                    className={styles.button}
+                                    onClick={() =>
+                                        navigate("/usuarios")
+                                    }
+                                >
+                                    👥 Gerenciar Usuários
+                                </button>
+                                </>
+                    )
+                }
             </div>
             <ExitButton/>
         </div>

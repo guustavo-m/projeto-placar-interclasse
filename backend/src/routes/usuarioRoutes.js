@@ -4,68 +4,60 @@ const express =
 const router =
     express.Router();
 
-const EquipeController =
+const UsuarioController =
     require(
-        "../controllers/equipeController"
+        "../controllers/usuarioController"
     );
 
-    const adminOnly =
+const adminOnly =
     require(
         "../middleware/adminMiddleware"
     );
 
 const verificarToken =
     require("../../src/middleware/authMiddleware");
-    
+
 const verificarAdmin =
     require("../../src/middleware/verificarAdmin");
 
-router.post(
+router.get(
     "/",
+    verificarToken,
     adminOnly,
-    verificarToken,
     verificarAdmin,
-    EquipeController.criar
-);
-
-router.get(
-    "/",
-    verificarToken,
-    EquipeController.listar
-);
-
-router.get(
-    "/filtro",
-    verificarToken,
-    EquipeController.listarPorFiltro
+    UsuarioController.listar
 );
 
 router.get(
     "/:id",
     verificarToken,
-    EquipeController.buscarPorId
+    adminOnly,
+    verificarAdmin,
+    UsuarioController.buscarPorId
 );
 
-router.get(
-    "/modalidade/:id",
+router.post(
+    "/",
     verificarToken,
-    EquipeController.buscarPorModalidade
+    adminOnly,
+    verificarAdmin,
+    UsuarioController.criar
 );
 
 router.put(
     "/:id",
-    adminOnly,
     verificarToken,
+    adminOnly,
     verificarAdmin,
-    EquipeController.atualizar
+    UsuarioController.atualizar
 );
 
 router.delete(
     "/:id",
-    adminOnly,
     verificarToken,
+    adminOnly,
     verificarAdmin,
-    EquipeController.excluir
+    UsuarioController.excluir
 );
 
 module.exports =

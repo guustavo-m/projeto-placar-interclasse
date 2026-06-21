@@ -28,6 +28,12 @@ const golRoutes =
 const authRoutes = 
     require("./routes/authRoutes")
 
+const usuarioRoutes =
+    require("./routes/usuarioRoutes");
+
+const pontosVolei =
+    require("./routes/pontoVoleiRoutes");
+
 const verificarToken =
     require("../src/middleware/authMiddleware");
 
@@ -75,9 +81,21 @@ app.use(
 );
 
 app.use(
+    "/pontos-volei",
+    verificarToken,
+    pontosVolei
+);
+
+app.use(
     "/partidas",
     verificarToken,
     partidaRoutes
+);
+
+app.use(
+    "/usuarios",
+    verificarToken,
+    usuarioRoutes
 );
 
 app.use(

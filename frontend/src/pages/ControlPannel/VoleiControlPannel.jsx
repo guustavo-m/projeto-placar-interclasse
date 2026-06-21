@@ -17,49 +17,214 @@ function VoleiControlPannel() {
     const [novoTempo, setNovoTempo] =
         useState("");
 
-    useEffect(() => {
+    const [modalAberto, setModalAberto] =
+        useState(false);
 
-        async function carregar() {
+    const [jogadores, setJogadores] =
+        useState([]);
 
-            const resposta =
-                await api.get(
-                    `/partidas/${id}`
-                );
+    const [ranking, setRanking] =
+        useState([]);
 
-            setPartida(
-                resposta.data
+    const [ladoSelecionado, setLadoSelecionado] =
+        useState("");
+
+    const [jogadorSelecionado, setJogadorSelecionado] =
+        useState("");
+
+    const [modalRemocao, setModalRemocao] =
+        useState(false);
+
+    const [pontosEquipe, setPontosEquipe] =
+        useState([]);
+
+useEffect(() => {
+
+    async function carregar() {
+
+        const resposta =
+            await api.get(
+                `/partidas/${id}`
             );
 
+        setPartida(
+            resposta.data
+        );
+
+        await carregarRanking();
+
+    }
+
+    carregar();
+
+    socket.on(
+        "partidaAtualizada",
+        async dados => {
+
+            if (
+                dados.id === Number(id)
+            ) {
+
+                setPartida(
+                    dados
+                );
+
+                await carregarRanking();
+
+            }
+
         }
+    );
 
-        carregar();
+    return () => {
 
-        socket.on(
-            "partidaAtualizada",
-            dados => {
+        socket.off(
+            "partidaAtualizada"
+        );
 
-                if (
-                    dados.id === Number(id)
-                ) {
+    };
 
-                    setPartida(
-                        dados
-                    );
+}, [id]);
 
-                }
 
+async function abrirModalRemocao(
+    lado
+) {
+
+    const resposta =
+        await api.get(
+            `/pontos-volei/partida/${partida.id}`
+        );
+
+    const equipeId =
+        lado === "A"
+            ? partida.equipe_a
+            : partida.equipe_b;
+
+    const pontosFiltrados =
+        resposta.data.filter(
+            ponto =>
+                ponto.equipe_id ===
+                equipeId
+        );
+
+    setPontosEquipe(
+        pontosFiltrados
+    );
+
+    setLadoSelecionado(
+        lado
+    );
+
+    setModalRemocao(
+        true
+    );
+
+}
+
+async function removerPontoRegistrado(
+    ponto
+) {
+
+    await api.delete(
+        `/pontos-volei/${ponto.id}`
+    );
+
+    await removerPonto(
+        ladoSelecionado
+    );
+
+    await carregarRanking();
+
+    setModalRemocao(
+        false
+    );
+
+}
+
+    async function abrirModalPonto(
+        lado
+    ) {
+
+        const equipeId =
+            lado === "A"
+                ? partida.equipe_a
+                : partida.equipe_b;
+
+        const resposta =
+            await api.get(
+                `/jogadores/equipe/${equipeId}`
+            );
+
+        setJogadores(
+            resposta.data
+        );
+
+        setLadoSelecionado(
+            lado
+        );
+
+        setJogadorSelecionado("");
+
+        setModalAberto(
+            true
+        );
+
+    }
+
+    async function confirmarPonto(jogador) {
+
+        if (!jogador)
+            return;
+
+        const equipeId =
+            ladoSelecionado === "A"
+                ? partida.equipe_a
+                : partida.equipe_b;
+
+        await api.post(
+            "/pontos-volei",
+            {
+                partida_id:
+                    partida.id,
+
+                jogador_id:
+                    Number(
+                        jogador.id
+                    ),
+
+                equipe_id:
+                    equipeId,
+
+                lado:
+                    ladoSelecionado
             }
         );
 
-        return () => {
+        await adicionarPonto(
+            ladoSelecionado
+        );
 
-            socket.off(
-                "partidaAtualizada"
-            );
+        carregarRanking();
 
-        };
+        setModalAberto(
+            false
+        );
 
-    }, [id]);
+    }
+
+    async function carregarRanking() {
+
+    const resposta =
+        await api.get(
+            `/pontos-volei/ranking/${id}`
+        );
+
+    setRanking(
+        resposta.data
+    );
+
+}
 
     async function adicionarPonto(lado) {
 
@@ -203,13 +368,57 @@ function VoleiControlPannel() {
                         Sets: {partida.sets_a}
                     </div>
 
+                <div className={styles.rankingBox}>
+
+                    <h3>
+                        Pontuadores
+                    </h3>
+
+                    <div className={styles.rankingHeader}>
+                        <span>Jogador</span>
+                        <span>Pontos</span>
+                    </div>
+
+                    {
+                        ranking
+                            .filter(
+                                jogador =>
+                                    jogador.equipe_id ===
+                                    partida.equipe_a
+                            )
+                            .map(
+                                jogador => (
+
+                                    <div
+                                        key={jogador.nome}
+                                        className={
+                                            styles.rankingRow
+                                        }
+                                    >
+
+                                        <span>
+                                            {jogador.nome}
+                                        </span>
+
+                                        <span>
+                                            {jogador.pontos}
+                                        </span>
+
+                                    </div>
+
+                                )
+                            )
+                    }
+
+                </div>
+
                     <div className={styles.buttons}>
 
                         <button
                             disabled={partida.finalizada}
                             className={`${styles.btn} ${styles.btnAdd}`}
                             onClick={() =>
-                                adicionarPonto("A")
+                                abrirModalPonto("A")
                             }
                         >
                             + Ponto
@@ -219,7 +428,7 @@ function VoleiControlPannel() {
                             disabled={partida.finalizada}
                             className={`${styles.btn} ${styles.btnRemove}`}
                             onClick={() =>
-                                removerPonto("A")
+                                abrirModalRemocao("A")
                             }
                         >
                             - Ponto
@@ -265,13 +474,57 @@ function VoleiControlPannel() {
                         Sets: {partida.sets_b}
                     </div>
 
+                    <div className={styles.rankingBox}>
+
+                        <h3>
+                            Pontuadores
+                        </h3>
+
+                        <div className={styles.rankingHeader}>
+                            <span>Jogador</span>
+                            <span>Pontos</span>
+                        </div>
+
+                        {
+                            ranking
+                                .filter(
+                                    jogador =>
+                                        jogador.equipe_id ===
+                                        partida.equipe_b
+                                )
+                                .map(
+                                    jogador => (
+
+                                        <div
+                                            key={jogador.nome}
+                                            className={
+                                                styles.rankingRow
+                                            }
+                                        >
+
+                                            <span>
+                                                {jogador.nome}
+                                            </span>
+
+                                            <span>
+                                                {jogador.pontos}
+                                            </span>
+
+                                        </div>
+
+                                    )
+                                )
+                        }
+
+                    </div>
+
                     <div className={styles.buttons}>
 
                         <button
                             disabled={partida.finalizada}
                             className={`${styles.btn} ${styles.btnAdd}`}
                             onClick={() =>
-                                adicionarPonto("B")
+                                abrirModalPonto("B")
                             }
                         >
                             + Ponto
@@ -281,7 +534,7 @@ function VoleiControlPannel() {
                             disabled={partida.finalizada}
                             className={`${styles.btn} ${styles.btnRemove}`}
                             onClick={() =>
-                                removerPonto("B")
+                                abrirModalRemocao("B")
                             }
                         >
                             - Ponto
@@ -340,6 +593,130 @@ function VoleiControlPannel() {
                     </div>
 
                 </div>
+                {
+                modalAberto && (
+
+                    <div
+                        className={
+                            styles.modalBackdrop
+                        }
+                    >
+
+                        <div
+                            className={
+                                styles.modal
+                            }
+                        >
+
+                            <h2>
+                                Quem marcou?
+                            </h2>
+
+                            {
+                                jogadores.map(
+                                    jogador => (
+
+                                        <button
+                                            key={
+                                                jogador.id
+                                            }
+                                            onClick={() =>
+                                                confirmarPonto(
+                                                    jogador
+                                                )
+                                            }
+                                        >
+                                            #{jogador.numero}
+                                            {" - "}
+                                            {jogador.nome}
+                                        </button>
+
+                                    )
+                                )
+                            }
+
+                            <button
+                                onClick={() =>
+                                    setModalAberto(
+                                        false
+                                    )
+                                }
+                            >
+                                Cancelar
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                )
+            }
+
+            {
+                modalRemocao && (
+
+                    <div
+                        className={
+                            styles.modalBackdrop
+                        }
+                    >
+
+                        <div
+                            className={
+                                styles.modal
+                            }
+                        >
+
+                            <h2>
+                                Remover ponto
+                            </h2>
+
+{
+    pontosEquipe.map(
+        ponto => (
+
+<button
+    key={ponto.id}
+    className={styles.pointItem}
+    onClick={() =>
+        removerPontoRegistrado(
+            ponto
+        )
+    }
+>
+
+    <span>
+        #{ponto.numero}
+        {" - "}
+        {ponto.nome}
+    </span>
+
+    <span>
+        ❌
+    </span>
+
+</button>
+
+        )
+    )
+}
+
+                            <button
+                                onClick={() =>
+                                    setModalRemocao(
+                                        false
+                                    )
+                                }
+                            >
+                                Cancelar
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                )
+            }
             <ExitButton/>
             </div>
 

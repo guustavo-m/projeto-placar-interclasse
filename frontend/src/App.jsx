@@ -8,6 +8,8 @@ import PrivateRoute from './components/PrivateRoute/PrivateRoute'
 import Login from "./pages/Login/Login";
 import PlayerManagement from "./pages/PlayerManager/PlayerManager";
 import TeamManagement from "./pages/TeamManager/TeamManager";
+import AdminRoute from "./components/AdminRoute/AdminRoute";
+import UserManager from "./pages/UserManager/UserManager";
 
 function App() {
 
@@ -65,7 +67,9 @@ function App() {
                     path="/jogadores"
                     element={
                         <PrivateRoute>
-                            <PlayerManagement />
+                            <AdminRoute>
+                                <PlayerManagement />
+                            </AdminRoute>
                         </PrivateRoute>
                     }
                 />
@@ -74,7 +78,20 @@ function App() {
                     path="/equipes"
                     element={
                         <PrivateRoute>
-                            <TeamManagement />
+                            <AdminRoute>
+                                <TeamManagement />
+                            </AdminRoute>
+                        </PrivateRoute>
+                    }
+                />
+
+                <Route
+                    path="/usuarios"
+                    element={
+                        <PrivateRoute>
+                            <AdminRoute>
+                                <UserManager />
+                            </AdminRoute>
                         </PrivateRoute>
                     }
                 />

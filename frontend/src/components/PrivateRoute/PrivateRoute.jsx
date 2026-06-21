@@ -1,4 +1,5 @@
 import { jwtDecode } from "jwt-decode";
+import { Navigate } from "react-router-dom";
 
 function PrivateRoute({ children }) {
 
@@ -25,6 +26,10 @@ function PrivateRoute({ children }) {
                 "token"
             );
 
+            localStorage.removeItem(
+                "usuario"
+            );
+
             return <Navigate to="/login" />;
 
         }
@@ -33,9 +38,13 @@ function PrivateRoute({ children }) {
 
     } catch {
 
-        localStorage.removeItem(
-            "token"
-        );
+            localStorage.removeItem(
+                "token"
+            );
+
+            localStorage.removeItem(
+                "usuario"
+            );
 
         return <Navigate to="/login" />;
 

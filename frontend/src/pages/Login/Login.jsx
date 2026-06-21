@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
 import styles from './Login.module.css'
@@ -29,6 +29,10 @@ function Login() {
             localStorage.setItem(
                 "token",
                 resposta.data.token
+            );
+            localStorage.setItem(
+                "tipo",
+                resposta.data.usuario.tipo
             );
 
             navigate("/home");

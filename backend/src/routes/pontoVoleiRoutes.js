@@ -4,9 +4,9 @@ const express =
 const router =
     express.Router();
 
-const GolController =
+const PontoVoleiController =
     require(
-        "../controllers/golController"
+        "../controllers/pontoVoleiController"
     );
 
 const verificarToken =
@@ -15,19 +15,25 @@ const verificarToken =
 router.post(
     "/",
     verificarToken,
-    GolController.criar
+    PontoVoleiController.criar
 );
 
 router.get(
     "/partida/:id",
     verificarToken,
-    GolController.listarPorPartida
+    PontoVoleiController.listarPorPartida
+);
+
+router.get(
+    "/ranking/:id",
+    verificarToken,
+    PontoVoleiController.rankingPartida
 );
 
 router.delete(
     "/:id",
     verificarToken,
-    GolController.remover
+    PontoVoleiController.excluir
 );
 
 module.exports =

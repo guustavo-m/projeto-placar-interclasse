@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
-
 import api from "../../services/api";
-
 import BackButton from "../../components/BackButton/BackButton";
 import ExitButton from "../../components/ExitButton/ExitButton";
-
 import styles from "./PlayerManager.module.css";
 
 function PlayerManager() {
