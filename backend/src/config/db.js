@@ -14,16 +14,15 @@ const pool =
 
     });
 
-pool.query(
-    "SELECT current_database(), current_user"
-)
+pool.query(`
+SELECT
+    current_database(),
+    current_user,
+    inet_server_addr(),
+    inet_server_port()
+`)
 .then(resultado => {
-
-    console.log(
-        "Banco conectado:",
-        resultado.rows
-    );
-
+    console.log(resultado.rows);
 })
 .catch(console.error);
 
