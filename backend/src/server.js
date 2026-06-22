@@ -190,13 +190,15 @@ console.log(
     !!process.env.DATABASE_URL
 );
 
+const PORT =
+    process.env.PORT || 3000;
 
 server.listen(
-    process.env.PORT,
+    PORT,
     () => {
 
         console.log(
-            `Servidor rodando na porta ${process.env.PORT} http://localhost:${process.env.PORT}`
+            `Servidor rodando na porta ${PORT} : http://localhost:${PORT}`
         );
 
     }
