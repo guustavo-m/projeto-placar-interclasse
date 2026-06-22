@@ -1,12 +1,31 @@
-const { Pool } = require("pg");
+const { Pool } =
+    require("pg");
 
-console.log("DATABASE_URL =", process.env.DATABASE_URL);
+const pool =
+    new Pool({
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+        connectionString:
+            process.env.DATABASE_URL,
 
-module.exports = pool;
+        ssl: {
+            rejectUnauthorized:
+                false
+        }
+
+    });
+
+pool.query(
+    "SELECT current_database(), current_user"
+)
+.then(resultado => {
+
+    console.log(
+        "Banco conectado:",
+        resultado.rows
+    );
+
+})
+.catch(console.error);
+
+module.exports =
+    pool;

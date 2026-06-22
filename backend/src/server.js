@@ -126,68 +126,68 @@ io.on(
     }
 );
 
-setInterval(
-    async () => {
+// setInterval(
+//     async () => {
 
-        try {
+//         try {
 
-            const resultado =
-                await pool.query(
-                    `
-                    SELECT id
-                    FROM partidas
-                    WHERE em_andamento = true
-                    `
-                );
+//             const resultado =
+//                 await pool.query(
+//                     `
+//                     SELECT id
+//                     FROM partidas
+//                     WHERE em_andamento = true
+//                     `
+//                 );
 
-            for (
-                const partida of resultado.rows
-            ) {
+//             for (
+//                 const partida of resultado.rows
+//             ) {
 
-                await pool.query(
-                    `
-                    UPDATE partidas
-                    SET
-                        tempo_restante =
-                            GREATEST(
-                                tempo_restante - 1,
-                                0
-                            ),
-                        em_andamento =
-                            CASE
-                                WHEN tempo_restante <= 1
-                                THEN false
-                                ELSE true
-                            END
-                    WHERE id = $1
-                    `,
-                    [partida.id]
-                );
+//                 await pool.query(
+//                     `
+//                     UPDATE partidas
+//                     SET
+//                         tempo_restante =
+//                             GREATEST(
+//                                 tempo_restante - 1,
+//                                 0
+//                             ),
+//                         em_andamento =
+//                             CASE
+//                                 WHEN tempo_restante <= 1
+//                                 THEN false
+//                                 ELSE true
+//                             END
+//                     WHERE id = $1
+//                     `,
+//                     [partida.id]
+//                 );
 
-                const atualizada =
-                    await Partida.buscarCompleta(
-                        partida.id
-                    );
+//                 const atualizada =
+//                     await Partida.buscarCompleta(
+//                         partida.id
+//                     );
 
-                io.emit(
-                    "partidaAtualizada",
-                    atualizada
-                );
+//                 io.emit(
+//                     "partidaAtualizada",
+//                     atualizada
+//                 );
 
-            }
+//             }
 
-        } catch (erro) {
+//         } catch (erro) {
 
-            console.error(
-                "Erro no cronômetro:",
-                erro
-            );
+//             console.error(
+//                 "Erro no cronômetro:",
+//                 erro
+//             );
 
-        }
+//         }
 
-    },
-    1000
-);
+//     },
+//     1000
+// );
 
 console.log(
     "NODE_ENV:",
