@@ -27,5 +27,18 @@ pool.query(
 })
 .catch(console.error);
 
+pool.query(`
+    SELECT table_name
+    FROM information_schema.tables
+    WHERE table_schema = 'public'
+`)
+.then(resultado => {
+    console.log(
+        "Tabelas encontradas:",
+        resultado.rows
+    );
+})
+.catch(console.error);
+
 module.exports =
     pool;
