@@ -62,6 +62,13 @@ app.use(express.json());
 // ===============================
 // 🔥 SOCKET.IO (PRODUÇÃO)
 // ===============================
+
+console.log(
+    "ALLOWED ORIGINS:",
+    allowedOrigins
+);
+
+
 const io = new Server(server, {
     cors: {
         origin: (origin, callback) => {
