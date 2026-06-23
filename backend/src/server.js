@@ -44,11 +44,12 @@ const server =
 
 const io =
     new Server(server, {
-
         cors: {
-            origin: "*"
+            origin: [
+                "http://localhost:5173",
+                process.env.FRONTEND_URL
+            ]
         }
-
     });
 
 app.set("io", io);
