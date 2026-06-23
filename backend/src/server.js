@@ -87,6 +87,24 @@ const io = new Server(server, {
 
 app.set("io", io);
 
+io.on("connection", socket => {
+
+    console.log(
+        "CLIENTE CONECTADO:",
+        socket.id
+    );
+
+    socket.on("disconnect", () => {
+
+        console.log(
+            "CLIENTE DESCONECTADO:",
+            socket.id
+        );
+
+    });
+
+});
+
 // ===============================
 // 🔥 ROTAS
 // ===============================
